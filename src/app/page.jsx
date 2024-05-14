@@ -1,14 +1,12 @@
-'use client'
+"use client";
 import { BsTwitterX } from "react-icons/bs";
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
+import { IoIosStar } from "react-icons/io";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
-
-
-
 
 export default function Home() {
   useEffect(() => {
@@ -37,11 +35,30 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex flex-col justify-center items-center px-2">
-            <p className="truncate-2 inline-block">
-              "The best moisturizer that I have used so far This is a great
-              moisturizer. It Moisturizes the skin very well. "
-            </p>
+          <div>
+            <div className="flex flex-col justify-center items-center px-2">
+              <p className="truncate-2 inline-block">
+                {`       "The best moisturizer that I have used so far This is a great
+              moisturizer. It Moisturizes the skin very well. "`}
+              </p>
+            </div>
+            <div className=" flex justify-center items-end">
+              <div className="flex gap-1  justify-center items-center mt-2">
+                <p>
+                  <IoIosStar />
+                </p>
+                <p>
+                  <IoIosStar />
+                </p>
+                <p>
+                  <IoIosStar />
+                </p>
+                <p>
+                  <IoIosStar />
+                </p>
+                <p className="text-sm pl-2">206 reviews</p>
+              </div>
+            </div>
           </div>
 
           <div className="flex  justify-center items-center">
@@ -58,7 +75,7 @@ export default function Home() {
 
           <div className="absolute inset-0 flex flex-col justify-between items-center">
             <div className="flex flex-col justify-center   h-full gap-2">
-              <p className=" text-4xl font-bold">Let's Fix your skin</p>
+              <p className=" text-4xl font-bold">{`Let's Fix your skin`}</p>
             </div>
             <div className="flex flex-col justify-center   h-full gap-2">
               <p>best for</p>
