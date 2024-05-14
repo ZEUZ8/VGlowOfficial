@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Increased specificity for the class selector */
+body .bebas-neue-regular {
+  font-family: "Bebas Neue", sans-serif;  /* Bebas Neue as preferred, fallback to sans-serif */
+  font-weight: 400;
+  font-size: 50px;
+  font-style: normal;
+}
+
+.strokeme {
+  color: white;
+  background-color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
