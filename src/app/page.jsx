@@ -15,7 +15,7 @@ export default function Home() {
     });
   }, []);
   return (
-    <main className="">
+    <main>
       <div className="flex justify-between items-center m-5 px-5">
         <div className="bebas-neue-regular cursor-pointer">V Glow</div>
         <div className="flex items-center justify-start gap-4 text-gray-600 font-normal text-sm cursor-pointer">
@@ -38,8 +38,8 @@ export default function Home() {
           <div>
             <div className="flex flex-col justify-center items-center px-2">
               <p className="truncate-2 inline-block">
-                {`       "The best moisturizer that I have used so far This is a great
-              moisturizer. It Moisturizes the skin very well. "`}
+                &quot;The best moisturizer that I have used so far. This is a
+                great moisturizer. It Moisturizes the skin very well.&quot;
               </p>
             </div>
             <div className=" flex justify-center items-end">
