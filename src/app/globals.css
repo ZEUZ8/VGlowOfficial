@@ -12,6 +12,12 @@ body .bebas-neue-regular {
   font-style: normal;
 }
 
+.bebas-neue-regular2{
+    font-family: "Bebas Neue", sans-serif;  /* Bebas Neue as preferred, fallback to sans-serif */
+  font-weight: 400;
+  font-size: 90px;
+  font-style: normal;
+}
 .strokeme {
   color: white;
   background-color: white;
