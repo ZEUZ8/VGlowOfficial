@@ -16,7 +16,7 @@ export default function Home() {
     });
   }, []);
   return (
-    <main className="bg-yellow-400">
+    <main className="scrollbar-hide">
       <div className="flex justify-between items-center p-5 px-5 ">
         <div className="bebas-neue-regular cursor-pointer">V Glow</div>
         <div className="flex items-center justify-start gap-4 text-gray-600 font-normal text-sm cursor-pointer">
@@ -26,8 +26,8 @@ export default function Home() {
           <div className="active:scale-90 Line">Whole Sale</div>
         </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2  xl:grid-cols-3 xl:gap-5 bg-yellow-400">
-        <div data-aos="fade-up-right" className=" grid max-lg:gap-5 ">
+      <div className="grid grid-cols-1 lg:grid-cols-2  xl:grid-cols-3 xl:gap-5 ">
+        <div data-aos="fade-up-right" className=" grid max-lg:gap-5 max-md:py-[2rem] ">
           <div className="flex justify-center items-center">
             <div className="flex flex-col justify-center   gap-2">
               <p className=" text-6xl font-bold">Glow Your</p>
