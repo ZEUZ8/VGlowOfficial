@@ -16,8 +16,8 @@ export default function Home() {
     });
   }, []);
   return (
-    <main className="scrollbar-hide">
-      <div className="flex justify-between items-center p-5 px-5 ">
+    <main className="scrollbar-hide overflow-x-hidden" style={{scrollbarWidth:0, scrollbarColor:"white"}}>
+      <div className="flex justify-between items-center p-5 px-5  ">
         <div className="bebas-neue-regular cursor-pointer">V Glow</div>
         <div className="flex items-center justify-start gap-4 text-gray-600 font-normal text-sm cursor-pointer">
           {/* <div>Usage</div> */}
@@ -32,7 +32,7 @@ export default function Home() {
             <div className="flex flex-col justify-center   gap-2">
               <p className=" text-6xl font-bold">Glow Your</p>
               <p className=" text-6xl font-bold ">Face With</p>
-              <p className=" text-6xl font-bold text-white bebas-neue-regular2">V Glow</p>
+              <p className=" text-6xl font-bold text-gray-600 bebas-neue-regular2">V Glow</p>
             </div>
           </div>
 
