@@ -68,7 +68,7 @@ export default function Home() {
 
         <div
           data-aos="zoom-out-up"
-          className=" flex justify-center items-center relative"
+          className=" flex justify-center items-center relative max-xl:hidden"
         >
           <img
             src="/wood&orange.png"
@@ -77,13 +77,13 @@ export default function Home() {
           />
         </div>
 
-        <div data-aos="fade-down-left">
-          <div className="h-[100%] flex justify-center items-center">
-            <img
+        <div data-aos="fade-down-left" >
+          <div className="h-[100%] flex justify-center items-center ">
+            {/* <img
               className="opacity-30 rotate-12"
               src="/vglow.png"
               alt="product image"
-            />
+            /> */}
           </div>
           <div className="absolute inset-0 flex flex-col justify-between items-center">
             <div className="flex flex-col justify-center   h-1/2 gap-2">
@@ -98,9 +98,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-      {/* <div className="p-3 bg-white fixed bottom-0  w-full">
+      <div className="p-3 bg-white fixed bottom-0  w-full">
         <Footer/>
-      </div> */}
+      </div>
     </main>
   );
 }
