@@ -15,7 +15,7 @@ export default function Home() {
   }, []);
   return (
     <main
-      className="scrollbar-hide  bg-white"
+      className="scrollbar-hide overflow-y-hidden bg-white"
       style={{ scrollbarWidth: 0, scrollbarColor: "white" }}
     >
       <div className="grid grid-cols-1 lg:grid-cols-2  xl:grid-cols-3 xl:gap-5  h-[85dvh]">
