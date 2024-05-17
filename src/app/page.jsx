@@ -68,11 +68,11 @@ export default function Home() {
 
         <div
           data-aos="zoom-out-up"
-          className="max-xl:hidden flex justify-center items-center"
+          className="max-xl:hidden flex justify-center items-center relative"
         >
           <img
-            src="/product.png"
-            className="h-[90%] flex justify-center items-center"
+            src="/vglow.png"
+            className=" flex justify-center items-center opacity-90 absolute top-[-20%]"
             alt=""
           />
         </div>
@@ -80,8 +80,8 @@ export default function Home() {
         <div data-aos="fade-down-left">
           <div className="h-[100%] flex justify-center items-center">
             <img
-              className="opacity-40  h-[80%]"
-              src="/cream2.png"
+              className="opacity-30 rotate-12"
+              src="/vglow.png"
               alt="product image"
             />
           </div>
