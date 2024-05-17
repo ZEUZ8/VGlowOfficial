@@ -15,7 +15,7 @@ export default function Home() {
   }, []);
   return (
     <main
-      className="scrollbar-hide overflow-y-hidden bg-white"
+      className="scrollbar-hide  bg-white"
       style={{ scrollbarWidth: 0, scrollbarColor: "white" }}
     >
       <div className="grid grid-cols-1 lg:grid-cols-2  xl:grid-cols-3 xl:gap-5  h-[85dvh]">
@@ -77,8 +77,8 @@ export default function Home() {
           />
         </div>
 
-        <div data-aos="fade-down-left" className=" ">
-          <div className="h-[100%] flex justify-center items-center ">
+        <div data-aos="fade-down-right" className="relative ">
+          <div className="h-[100%] w-[70%] flex justify-center items-center ">
             <img
               className="opacity-30 rotate-12 "
               src="/vglow.png"
