@@ -98,9 +98,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="p-3 bg-white fixed bottom-0  w-full">
+      {/* <div className="p-3 bg-white fixed bottom-0  w-full">
         <Footer/>
-      </div>
+      </div> */}
     </main>
   );
 }
