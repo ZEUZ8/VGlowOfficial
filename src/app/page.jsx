@@ -77,15 +77,15 @@ export default function Home() {
           />
         </div>
 
-        <div data-aos="fade-down-right" className="relative ">
-          <div className="h-[100%] w-[70%] flex justify-center items-center ">
+        <div data-aos="fade-down-right" className="max-md:pb-[5rem] flex justify-center">
+          {/* <div className="h-[100%] w-[70%] flex justify-center items-center ">
             <img
               className="opacity-30 rotate-12 "
               src="/vglow.png"
               alt="product image"
             />
-          </div>
-          <div className="absolute inset-0 flex flex-col justify-between items-center">
+          </div> */}
+          <div className=" flex flex-col justify-between items-center ">
             <div className="flex flex-col justify-center   h-1/2 gap-2">
               <p className=" text-4xl font-bold">{`Let's Fix your skin`}</p>
             </div>
