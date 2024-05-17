@@ -15,7 +15,7 @@ export default function Home() {
   }, []);
   return (
     <main
-      className="scrollbar-hide overflow-x-hidden bg-white"
+      className="scrollbar-hide  bg-white"
       style={{ scrollbarWidth: 0, scrollbarColor: "white" }}
     >
       <div className="grid grid-cols-1 lg:grid-cols-2  xl:grid-cols-3 xl:gap-5  h-[85dvh]">
@@ -68,22 +68,22 @@ export default function Home() {
 
         <div
           data-aos="zoom-out-up"
-          className=" flex justify-center items-center relative max-xl:hidden"
+          className=" flex justify-center items-center  "
         >
           <img
             src="/wood&orange.png"
-            className=" flex justify-center items-center opacity-90 absolute  rounded-xl"
+            className=" flex justify-center items-center p-2   rounded-xl"
             alt=""
           />
         </div>
 
-        <div data-aos="fade-down-left" >
+        <div data-aos="fade-down-left" className=" ">
           <div className="h-[100%] flex justify-center items-center ">
-            {/* <img
-              className="opacity-30 rotate-12"
+            <img
+              className="opacity-30 rotate-12 "
               src="/vglow.png"
               alt="product image"
-            /> */}
+            />
           </div>
           <div className="absolute inset-0 flex flex-col justify-between items-center">
             <div className="flex flex-col justify-center   h-1/2 gap-2">
