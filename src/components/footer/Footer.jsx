@@ -40,10 +40,9 @@ const Footer = () => {
               </Link>
             </p>
             <p className="flex justify-center items-center cursor-pointer max-md:text-xs text-xl hover:scale-y-110">
-              <Link href='https//wa.me/917306131184'>
-              <FaWhatsapp />
-              </Link>
-
+              <a href="https//wa.me/917306131184">
+                <FaWhatsapp />
+              </a>
             </p>
           </div>
         </div>
