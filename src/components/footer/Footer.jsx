@@ -40,7 +40,16 @@ const Footer = () => {
               </Link>
             </p>
             <p className="flex justify-center items-center cursor-pointer max-md:text-xs text-xl hover:scale-y-110">
-              <a href="https//wa.me/917306131184">
+              {/* <a href="https//wa.me/917306131184">
+                <FaWhatsapp />
+              </a> */}
+              <a
+                rel="nofollow"
+                class="share-whatsapp"
+                href="https://wa.me/917306131184?text=Hello%20I%20would%20like%20to%20know%20more%20about%20VGlow"
+                data-action="share/whatsapp/share"
+                title="WhatsApp"
+              >
                 <FaWhatsapp />
               </a>
             </p>
