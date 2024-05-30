@@ -1,11 +1,13 @@
 "use client";
 import { IoIosStar } from "react-icons/io";
+import { LiaStarHalfAltSolid } from "react-icons/lia";
 import { motion } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/Navbar";
+import Link from "next/link";
 
 export default function Home() {
   useEffect(() => {
@@ -36,12 +38,13 @@ export default function Home() {
           <div>
             <div className="flex flex-col justify-center items-center px-2">
               <p className="truncate-2 inline-block">
-                &quot;The best moisturizer that I have used so far. This is a
-                great moisturizer. It Moisturizes the skin very well.&quot;
+                &quot;Within just 10 days of using this great product, my face
+                began to glow and brighten. Now, I am able to maintain that
+                radiant look effortlessly.&quot;
               </p>
             </div>
-            <div className=" flex justify-center items-end">
-              <div className="flex gap-1  justify-center items-center mt-2">
+            <div className=" flex justify-center items-center gap-2 mt-2">
+              <div className="flex gap-1  justify-center items-center ">
                 <p>
                   <IoIosStar />
                 </p>
@@ -54,21 +57,28 @@ export default function Home() {
                 <p>
                   <IoIosStar />
                 </p>
-                <p className="text-sm pl-2">206 reviews</p>
+                <p>
+                  <LiaStarHalfAltSolid />
+                </p>
+              </div>
+              <div className="">
+                <p className="text-sm">206 reviews</p>
               </div>
             </div>
           </div>
 
           <div className="flex  justify-center items-start ">
             <div className="border border-gray-800 p-3 rounded-md cursor-pointer active:scale-95">
-              <p className="">Order Now</p>
+              <p className="">
+                <Link href="/order">Order Now</Link>
+              </p>
             </div>
           </div>
         </div>
 
         <div
           data-aos="zoom-out-up"
-          className=" flex justify-center items-center  "
+          className=" flex justify-center items-center "
         >
           <img
             src="/wood&orange.png"
@@ -77,7 +87,10 @@ export default function Home() {
           />
         </div>
 
-        <div data-aos="fade-down-right" className="max-md:pb-[5rem] flex justify-center">
+        <div
+          data-aos="fade-down-right"
+          className="max-xl:pb-[5rem] flex justify-center lg:col-span-2 xl:col-span-1"
+        >
           {/* <div className="h-[100%] w-[70%] flex justify-center items-center ">
             <img
               className="opacity-30 rotate-12 "
@@ -91,15 +104,15 @@ export default function Home() {
             </div>
             <div className="flex flex-col justify-center  h-full gap-2">
               <p>best for</p>
-              <p className=" text-6xl font-bold">Whitening</p>
-              <p className=" text-6xl font-bold ">Anne marks</p>
+              <p className=" text-6xl font-bold">Brightening</p>
+              <p className=" text-6xl font-bold ">Acne Marks</p>
               <p className=" text-6xl font-bold  ">Dark Spotes</p>
             </div>
           </div>
         </div>
       </div>
       <div className="p-3 bg-white fixed bottom-0  w-full">
-        <Footer/>
+        <Footer />
       </div>
     </main>
   );
