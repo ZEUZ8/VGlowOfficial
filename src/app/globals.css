@@ -63,3 +63,10 @@ body .bebas-neue-regular {
   transform: scaleX(1);
 }
 
+
+.styled-input::placeholder {
+  color: #888; /* Text color */
+  font-size: 13px; /* Font size */
+  font-style: italic; /* Font style */
+  opacity: 1; /* Opacity (1 is default, <1 to make it less visible) */
+}

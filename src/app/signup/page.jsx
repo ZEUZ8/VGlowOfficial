@@ -1,7 +1,7 @@
-'use client'
+"use client";
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
-import { loginValidation } from "@/validation/user/login";
+import { signupValidation } from "@/validation/user/signup";
 import axios from "axios";
 
 const page = () => {
@@ -26,13 +26,13 @@ const page = () => {
     handleChange,
     resetForm,
   } = useFormik({
-    initialValues: { email: "", password: "" },
-    validationSchema: loginValidation,
+    initialValues: { email: "", password: "", mobile: "", username: "" },
+    validationSchema: signupValidation,
     onSubmit,
   });
 
   useEffect(() => {
-    console.log(errors, " the erros in the console");
+    console.log(errors, " the values in the console");
   }, [errors]);
 
   return (
@@ -42,17 +42,62 @@ const page = () => {
           <div className="bg-white p-4 rounded-l-xl ">
             <div className=" p-4 ">
               <h1 className="text-2xl font-semibold tracking-wide text-center ">
-                Login
+                Sign Up
               </h1>
             </div>
             <form action="">
               <div className="mb-4">
-                <label
+                {/* <label
+                  htmlFor="username"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Email
+                </label> */}
+                <input
+                  type="string"
+                  id="username"
+                  name="username"
+                  placeholder={errors.username ? errors.username : "User Name"}
+                  value={values.username}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  className={`mt-1 p-2 block w-full border bg-gray-50  border-gray-200 rounded-md shadow-special2 styled-input ${errors.username && !values.username && "placeholder:text-red-500"}`}
+                />
+                {errors.username && (
+                  <p className="p-1 text-xs font-light text-red-500">
+                    {errors.username && values.username && errors.username}
+                  </p>
+                )}
+              </div>
+              <div className="mb-4">
+                {/* <label
+                  htmlFor="phone"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Phone 
+                </label> */}
+                <input
+                  id="phone"
+                  name="phone"
+                  placeholder={errors.phone ? errors.phone : "Phone"}
+                  value={values.phone}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  className={`mt-1 p-2 block w-full border bg-gray-50  border-gray-200 rounded-md shadow-special2 styled-input ${errors.phone && !values.phone && "placeholder:text-red-500"}`}
+                />
+                {errors.phone && (
+                  <p className="p-1 text-xs font-light text-red-500 italic">
+                    {errors.phone && values.phone && errors.phone}
+                  </p>
+                )}
+              </div>
+              <div className="mb-4">
+                {/* <label
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700"
                 >
                   Email
-                </label>
+                </label> */}
                 <input
                   type="email"
                   id="email"
@@ -61,21 +106,21 @@ const page = () => {
                   value={values.email}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  className="mt-1 p-2 block w-full border bg-gray-50  border-gray-200 rounded-md shadow-special2 styled-input"
+                  className={`mt-1 p-2 block w-full border bg-gray-50  border-gray-200 rounded-md shadow-special2 styled-input ${errors.email && !values.email && "placeholder:text-red-500"}`}
                 />
                 {errors.email && (
                   <p className="p-1 text-xs font-light text-red-500">
-                    {errors.email}
+                    {errors.email && values.email && errors.email}
                   </p>
                 )}
               </div>
               <div className="mb-4">
-                <label
+                {/* <label
                   htmlFor="password"
                   className="block text-sm font-medium text-gray-700"
                 >
                   Password
-                </label>
+                </label> */}
                 <input
                   type="text"
                   id="password"
@@ -84,11 +129,11 @@ const page = () => {
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="mt-1 p-2 block w-full border bg-gray-50 border-gray-200 rounded-md shadow-special2 styled-input"
+                  className={`mt-1 p-2 block w-full border bg-gray-50  border-gray-200 rounded-md shadow-special2 styled-input ${errors.password && !values.password && "placeholder:text-red-500"}`}
                 />
                 {errors.password && (
                   <p className="p-1 text-xs font-light text-red-500">
-                    {errors.password}
+                    {errors.password && values.password && errors.password}
                   </p>
                 )}
               </div>
@@ -98,9 +143,9 @@ const page = () => {
               <button
                 type="submit"
                 onClick={handleSubmit}
-                className="w-full py-2 px-4 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600"
+                className="w-full py-1 px-4 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600"
               >
-                Login
+                Sign Up
               </button>
             </div>
             <hr className="p-1" />
@@ -121,9 +166,9 @@ const page = () => {
             <div>
               <div className=" flex justify-center items-center pt-2">
                 <p className="text-xs font-light">
-                  don't have a account{" "}
-                  <a href="/signup" className="text-blue-500">
-                    create?
+                  have a account{" "}
+                  <a href="/login" className="text-blue-500">
+                    login?
                   </a>
                 </p>
               </div>
@@ -132,7 +177,7 @@ const page = () => {
           <div className="relative bg-white rounded-r-2xl">
             <div className="absolute inset-0 flex justify-center items-center bg-transparent rounded-xl ">
               <img
-                src="/cream.png"
+                src="/withGrape.png"
                 className="w-[100%] h-[100%] rounded-r-xl"
                 alt=""
               />

@@ -18,7 +18,7 @@ export default function Home() {
   }, []);
   return (
     <main
-      className="scrollbar-hide  bg-white"
+      className="scrollbar-hide  bg-transparent  "
       style={{ scrollbarWidth: 0, scrollbarColor: "white" }}
     >
       <div className="grid grid-cols-1 lg:grid-cols-2  xl:grid-cols-3 xl:gap-5  h-[85dvh]">
@@ -99,7 +99,7 @@ export default function Home() {
               alt="product image"
             />
           </div> */}
-          <div className=" flex flex-col justify-between items-center ">
+          <div className=" flex flex-col justify-between items-center  ">
             <div className=" flex flex-col justify-center   h-1/2 gap-2">
               <p className=" text-4xl font-bold">{`Let's Fix your skin`}</p>
             </div>
