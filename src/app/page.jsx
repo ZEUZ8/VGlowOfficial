@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/Navbar";
 import Link from "next/link";
+import Products from "@/components/products/Products";
 
 export default function Home() {
   useEffect(() => {
@@ -70,7 +71,7 @@ export default function Home() {
           <div className="flex  justify-center items-start ">
             <div className="border border-gray-800 p-3 rounded-md cursor-pointer active:scale-95">
               <p className="">
-                <Link href="/order">Order Now</Link>
+                <Link href="/products">Shop Now</Link>
               </p>
             </div>
           </div>
@@ -99,7 +100,7 @@ export default function Home() {
             />
           </div> */}
           <div className=" flex flex-col justify-between items-center ">
-            <div className="flex flex-col justify-center   h-1/2 gap-2">
+            <div className=" flex flex-col justify-center   h-1/2 gap-2">
               <p className=" text-4xl font-bold">{`Let's Fix your skin`}</p>
             </div>
             <div className="flex flex-col justify-center  h-full gap-2">
@@ -111,6 +112,9 @@ export default function Home() {
           </div>
         </div>
       </div>
+      {/* <div className="p-5 bg-pink-400">
+        <Products />
+      </div> */}
       <div className="p-3 bg-white fixed bottom-0  w-full">
         <Footer />
       </div>

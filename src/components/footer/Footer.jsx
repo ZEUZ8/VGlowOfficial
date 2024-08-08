@@ -12,13 +12,16 @@ const Footer = () => {
       <div className="grid grid-cols-3">
         <div className="col-span-1 flex justify-start items-center gap-1">
           <p className="">
-            <IoIosMail />
+            <a href="mailto:vglowfacecream@gmail.com"><IoIosMail /></a>
           </p>
-          <p className="text-xs text-gray-600">
-            <a href="">vglowfacecream@gmail.com</a>
+          <p className="text-xs text-gray-600 max-md:hidden">
+            <a href="mailto:vglowfacecream@gmail.com">vglowfacecream@gmail.com</a>
+          </p>
+          <p className="text-xs text-gray-600 md:hidden">
+            <a href="mailto:vglowfacecream@gmail.com">Mail</a>
           </p>
         </div>
-        <div className="max-sm:text-white col-span-1 flex justify-center items-center max-md:justify-end">
+        <div className=" max-sm:text-white col-span-1 flex justify-center items-center ">
           <p className="text-gray-600 text-xs">Copyright@VGlow</p>
         </div>
 

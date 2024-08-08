@@ -24,6 +24,18 @@ body .bebas-neue-regular {
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
+.shadow-special {
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.165);
+}
+
+.shadow-special2 {
+  box-shadow: 0 0 30px rgba(245, 245, 245, 0.227);
+}
+
+.boxShadow{
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
 .truncate-2 {
   overflow: hidden;
   display: inline-block;
@@ -50,3 +62,4 @@ body .bebas-neue-regular {
 .Line:hover::after{
   transform: scaleX(1);
 }
+

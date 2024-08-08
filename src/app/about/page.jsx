@@ -4,26 +4,25 @@ import { TiArrowForwardOutline } from "react-icons/ti";
 
 const About = () => {
   return (
-    <div className="">
-      <div>
-        <div className="grid grid-cols-2">
-          <div className=" col-span-1">
-            {" "}
-            <div className=" flex justify-center items-center">
-              <h1 className="text-3xl font-bold text-gray-700 underline underline-offset-4">
-                V Glow
-              </h1>
-            </div>
-            <div className="p-3 px-5">
-              <p>
-                asdjflaksjdflkajsdf Lorem ipsum dolor sit amet consectetur
-                adipisicing elit. Voluptates labore illum eligendi sit cumque
-                ipsum ab maxime laboriosam tempore magnam!
-              </p>
-            </div>
+    <div className="pt-5">
+
+      <div className=" grid grid-cols-2 p-2">
+        <div className=" col-span-1 ">
+          {" "}
+          <div className=" flex justify-center items-center">
+            <h1 className="text-3xl font-bold text-gray-700 underline underline-offset-4">
+              Face Acne
+            </h1>
+          </div>
+          <div className="p-3 px-5">
+            <p>
+              asdjflaksjdflkajsdf Lorem ipsum dolor sit amet consectetur
+              adipisicing elit. Voluptates labore illum eligendi sit cumque
+              ipsum ab maxime laboriosam tempore magnam!
+            </p>
           </div>
         </div>
-        <div className="grid grid-cols-2  ">
+        <div>
           <div className="w-full col-span-1"></div>
           <div className=" col-span-1 flex justify-center items-center">
             <img src="/topcurved.png" className="h-[15rem] rounded-lg" alt="" />
