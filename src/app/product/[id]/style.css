@@ -1,0 +1,39 @@
+@keyframes scaleOut {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+.product-img {
+  transition: transform 0.5s ease-in-out; /* Smooth transition for scaling back */
+}
+
+.product-img:hover{
+  animation: scaleOut 0.5s ease-in-out forwards;
+}
+
+
+.line{
+  color: black;
+}
+
+.progress-container {
+  width: 100%;
+  background-color: #f3f3f3;
+  border-radius: 25px;
+  overflow: hidden;
+  height: 20px;
+}
+
+.progress-bar {
+  width: 50%; /* Change this value to represent the progress percentage */
+  height: 100%;
+  background-color: #4caf50;
+  text-align: center;
+  line-height: 20px; /* Adjust this to vertically center the text */
+  color: white;
+  border-radius: 25px;
+  transition: width 0.4s ease; /* Optional: For smooth transition */
+}

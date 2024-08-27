@@ -4,7 +4,6 @@ import React from "react";
 
 const Clientcomponent = () => {
   const pathname = usePathname();
-  console.log(pathname);
   return (
     <>
       {pathname === "/" && (

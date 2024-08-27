@@ -12,7 +12,19 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            "word-break-after-8": {
+              // Adjust the line-break property as needed
+              "line-break": "after-word",
+              overflow: "hidden",
+              "text-overflow": "ellipsis",
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [require('tailwind-scrollbar-hide')],
+  plugins: [require("tailwind-scrollbar-hide")],
 };

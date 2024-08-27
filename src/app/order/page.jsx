@@ -11,7 +11,6 @@ const Order = () => {
     "Debit Card",
   ]);
   const handleSelect = (i) => {
-    console.log(i, " the i");
     setSelect(i);
   };
   return (

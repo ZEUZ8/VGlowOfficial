@@ -6,10 +6,9 @@ import axios from "axios";
 
 const page = () => {
   const onSubmit = async () => {
-    console.log(values, "consoling the values after pressing login");
     try {
-      const response = await axios.post("/localhost3000/userlogin", values);
-      console.log(response, " the login have succesfully completed");
+      const response = await axios.post("/api/auth/login",values)
+      console.log(response,' the response in the ')
     } catch (errors) {
       console.log(
         errors,
@@ -38,7 +37,7 @@ const page = () => {
   return (
     <div className="bg-transparent  h-[83vh] flex justify-center items-center">
       <div className=" w-[60%]  shadow-special  rounded-xl">
-        <div className="grid  grid-cols-2  rounded-xl ">
+        <div className="grid  md:grid-cols-2  rounded-xl ">
           <div className="bg-white p-4 rounded-l-xl ">
             <div className=" p-4 ">
               <h1 className="text-2xl font-semibold tracking-wide text-center ">
@@ -61,7 +60,7 @@ const page = () => {
                   value={values.email}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  className="mt-1 p-2 block w-full border bg-gray-50  border-gray-200 rounded-md shadow-special2 styled-input"
+                  className="mt- p-2 block w-full border bg-gray-50  border-gray-200 rounded-md shadow-special2 styled-input"
                 />
                 {errors.email && (
                   <p className="p-1 text-xs font-light text-red-500">
@@ -129,7 +128,7 @@ const page = () => {
               </div>
             </div>
           </div>
-          <div className="relative bg-white rounded-r-2xl">
+          <div className="max-md:hidden relative bg-white rounded-r-2xl">
             <div className="absolute inset-0 flex justify-center items-center bg-transparent rounded-xl ">
               <img
                 src="/cream.png"
