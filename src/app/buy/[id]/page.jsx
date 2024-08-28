@@ -46,45 +46,58 @@ const page = () => {
               </div>
             </div>
             <hr className="my-4" />
-            <div className="my-3">
+            <div className="my-4">
               <p className="font-medium text-gray-500 text-sm">
-                PRICE DETAIALS
+                PRICE DETAILS
               </p>
             </div>
-            <div className="mb-3">
+            <div className="mb-4">
               <div className="flex justify-between items-center text-sm mb-2">
-                <div className="text-gray-500 font-normal">Total MRP</div>
-                <div className="text-gray-800 font-normal">1499</div>
-              </div>
-            </div>
-            <div className="mb-3">
-              <div className="flex justify-between items-center text-sm mb-2">
-                <div className="text-gray-500 font-normal">Discount on MRP</div>
-                <div className="text-gray-800 font-normal">1499</div>
-              </div>
-            </div>
-            <div className="mb-3">
-              <div className="flex justify-between items-center text-sm mb-2">
-                <div className="text-gray-500 font-normal">Coupon Discount</div>
-                <div className="text-gray-800 font-normal">1499</div>
-              </div>
-            </div>
-            <div className="mb-3">
-              <div className="flex justify-between items-center text-sm mb-2">
-                <div className="text-gray-500 font-normal">Plantform Fee</div>
-                <div className="text-gray-800 font-normal">20</div>
-              </div>
-            </div>
-            <div className="mb-3">
-              <div className="flex justify-between items-center text-sm mb-2">
-                <div>
-                  <div className="text-gray-500 font-normal">Shipping Fee</div>
-                  <p className="text-gray-600 font-light text-[10px]">
-                    free shipping for you
+                <div className="text-gray-800 font-normal">Total MRP</div>
+                <div className="text-gray-800 font-normal flex justify-center items-center font-mono">
+                  <p className="">
+                    <MdOutlineCurrencyRupee />
                   </p>
+                  <p>1499</p>
+                </div>
+              </div>
+            </div>
+            <div className="mb-4">
+              <div className="flex justify-between items-center text-sm mb-2">
+                <div className="text-gray-800 font-normal">Discount on MRP</div>
+                <div className="font-normal flex justify-center items-center font-mono text-green-500">
+                  <p>-</p>
+                  <p className="">
+                    <MdOutlineCurrencyRupee />
+                  </p>
+                  <p className="font-mono">499</p>
+                </div>
+              </div>
+            </div>
+            <div className="mb-4">
+              <div className="flex justify-between items-center text-sm mb-2">
+                <div className="text-gray-800 font-normal">Coupon Discount</div>
+                <div className="text-gray-800 font-normal  font-mono">
+                  <p className="text-rose-500">Apply Coupon</p>
+                </div>
+              </div>
+            </div>
+            <div className="mb-4">
+              <div className="flex justify-between items-center text-sm mb-2">
+                <div className="text-gray-800 font-normal">Plantform Fee</div>
+                <div className="text-gray-800 font-normal font-mono">20</div>
+              </div>
+            </div>
+            <div className="mb-4">
+              <div className="flex justify-between items-center text-sm ">
+                <div>
+                  <div className="text-gray-800 font-normal">Shipping Fee</div>
                 </div>
                 <div className="text-green-500 font-normal">FREE</div>
               </div>
+              <p className="text-gray-600 font-light text-[10px] mb-2">
+                free shipping for you
+              </p>
             </div>
             <hr className="my-4" />
             <div>
@@ -93,8 +106,10 @@ const page = () => {
                   Total Amount
                 </p>
                 <div className="flex justify-center items-center">
-                  <p className="pl-1"><MdOutlineCurrencyRupee /></p>
-                  <p className="text-gray-600 font-medium font-sans">1020</p>
+                  <p className="pl-1">
+                    <MdOutlineCurrencyRupee />
+                  </p>
+                  <p className="text-gray-600 font-medium font-mono">1020</p>
                 </div>
               </div>
             </div>

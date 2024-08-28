@@ -30,7 +30,7 @@ const page = () => {
         />
       </div>
       <div className="col-span-9  p-2">
-        <div className=" rounded-lg grid grid-cols-2  mb-4 ">
+        <div className=" rounded-lg grid lg:grid-cols-2  mb-4 ">
           <div className="grid grid-cols-2  gap-1 p-1">
             <div className="border border-gray-100 overflow-hidden img-container ">
               <img
@@ -151,7 +151,7 @@ const page = () => {
           </div>
         </div>
         <hr />
-        <div className="grid grid-cols-2 p-2">
+        <div className="grid md:grid-cols-2 p-2">
           <div className="">
             <div className="py-2 flex justify-start items-center gap-2 ">
               <h1 className="text-lg font-bold">Product Details</h1>
