@@ -4,14 +4,15 @@ import Navigator from "@/components/bag/Navigator";
 import React, { useState } from "react";
 import { RiCoupon2Line } from "react-icons/ri";
 import { MdOutlineCurrencyRupee } from "react-icons/md";
+import Link from "next/link";
 
 const page = () => {
   return (
     <div>
       <Navigator />
       <div className=" grid justify-center  py-2 my-1  mx-auto">
-        <div className="grid grid-cols-10 bg-white mx-auto">
-          <div className="col-span-6 p-2">
+        <div className="grid lg:grid-cols-10 bg-white mx-auto">
+          <div className="lg:col-span-6 p-2">
             <div className="p-4 flex justify-between items-center">
               <div className="flex justify-center items-center gap-2">
                 <input type="checkbox" className="cursor-pointer" />
@@ -28,7 +29,7 @@ const page = () => {
             <BagItem />
           </div>
 
-          <div className="col-span-4 border-s pt-5 pl-4">
+          <div className="lg:col-span-4 lg:border-s pt-5 p-4  ">
             <div className="mb-3">
               <div>
                 <p className="text-gray-500 font-medium text-sm">Coupons</p>
@@ -47,9 +48,7 @@ const page = () => {
             </div>
             <hr className="my-4" />
             <div className="my-4">
-              <p className="font-medium text-gray-500 text-sm">
-                PRICE DETAILS
-              </p>
+              <p className="font-medium text-gray-500 text-sm">PRICE DETAILS</p>
             </div>
             <div className="mb-4">
               <div className="flex justify-between items-center text-sm mb-2">
@@ -114,9 +113,11 @@ const page = () => {
               </div>
             </div>
             <div className="bg-red-50 my-4">
-              <div className="p-2 bg-rose-500  rounded-sm flex justify-center items-center ">
-                <p className="text-white font-medium  ">Place Order</p>
-              </div>
+              <Link href="/checkout/address">
+                <div className="p-2 bg-rose-500  rounded-sm flex justify-center items-center cursor-pointer ">
+                  <p className="text-white font-medium  ">Place Order</p>
+                </div>
+              </Link>
             </div>
           </div>
         </div>

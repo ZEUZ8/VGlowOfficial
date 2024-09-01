@@ -91,7 +91,7 @@ const page = () => {
                 <p className="font-light line-through">$1499</p>
               </div>
               <div>
-                <p className="text-base font-bold text-orange-400">{`(40% oFF)`}</p>
+                <p className="text-base font-semibold text-orange-400">{`(40% oFF)`}</p>
               </div>
             </div>
             <div>
@@ -113,7 +113,7 @@ const page = () => {
                 <p className="text-white font-semibold">ADD TO BAG</p>
               </div>
               <div className=" border rounded-md p-2 flex justify-center items-center shadow-special2 cursor-pointer">
-                <Link href="/buy/8">
+                <Link href="/checkout/cart">
                   {" "}
                   <p className=" font-semibold">BUY </p>
                 </Link>
@@ -151,7 +151,7 @@ const page = () => {
           </div>
         </div>
         <hr />
-        <div className="grid md:grid-cols-2 p-2">
+        <div className="grid md:grid-cols-2 p-2 gap-2">
           <div className="">
             <div className="py-2 flex justify-start items-center gap-2 ">
               <h1 className="text-lg font-bold">Product Details</h1>

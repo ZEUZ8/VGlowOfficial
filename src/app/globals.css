@@ -63,6 +63,9 @@ body .bebas-neue-regular {
   transform: scaleX(1);
 }
 
+.shadow3{
+  box-shadow: rgba(188, 192, 197, 0.2) 0px 8px 24px;;
+}
 
 .styled-input::placeholder {
   color: #888; /* Text color */

@@ -3,7 +3,7 @@ import { RxCross2 } from "react-icons/rx";
 
 const BagItem = () => {
   return (
-    <div className="border  rounded-md px-3 pt-3 flex justify-around mb-2">
+    <div className="border border-gray-300  rounded-md px-3 pt-3 flex justify-around mb-2">
       <div className="relative">
         <div className="absolute top-0 left-0">
           {" "}
@@ -17,7 +17,7 @@ const BagItem = () => {
       </div>
       <div className="w-full pt-1 px-1">
         <h2 className="font-bold text-sm py-1">VGlow</h2>
-        <p className="max-w-[300px] truncate   text-xs font-light ">
+        <p className="max-w-[100px] sm:max-w-[200px] lg:max-w-[300px] truncate   text-xs font-light ">
           Everyday Glow+ Combo - Dewy Sunscreen 50g & Smoothie Face Wash 100ml
         </p>
         <div className="p-2 flex items-center gap-3">
