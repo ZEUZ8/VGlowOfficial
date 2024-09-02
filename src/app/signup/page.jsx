@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { signupValidation } from "@/validation/user/signup";
 import axios from "axios";
 
-const page = () => {
+const Signup = () => {
 
   const onSubmit = async (e) => {
     try {
@@ -186,4 +186,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Signup;

@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { loginValidation } from "@/validation/user/login";
 import axios from "axios";
 
-const page = () => {
+const Login = () => {
   const onSubmit = async () => {
     try {
       const response = await axios.post("/api/auth/login",values)
@@ -120,7 +120,7 @@ const page = () => {
             <div>
               <div className=" flex justify-center items-center pt-2">
                 <p className="text-xs font-light">
-                  don't have a account{" "}
+                  {`don't have a account`}
                   <a href="/signup" className="text-blue-500">
                     create?
                   </a>
@@ -143,4 +143,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Login;
