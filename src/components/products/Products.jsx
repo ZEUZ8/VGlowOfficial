@@ -9,11 +9,11 @@ const Products = ({image,i}) => {
     setHover(prev => true)
   }
   return (
-    <div onMouseEnter={handleHover} className={`border border-gray-300 rounded-md h-[20rem] grid grid-rows-10 cursor-pointer  hover:scale-95 `}>
+    <div onMouseEnter={handleHover} className={`border border-gray-300 rounded-md h-[20rem] grid grid-rows-10 cursor-pointer  lg:hover:scale-95 `}>
       <div className="flex justify-center items-center row-span-6   overflow-hidden">
         <img
           src={image}
-          className="rounded-lg max-h-[100%] pt-1 w-fit "
+          className="rounded-lg max-h-[100%] pt-1 w-fit object-contain "
           alt="proudct Image"
         />
       </div>

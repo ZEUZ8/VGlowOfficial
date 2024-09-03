@@ -23,7 +23,7 @@ const page = () => {
           filtering section
         </div> */}
         <div className="col-span-12 p-1 ">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 items-center justify-start gap-5 flex-wrap py-1 px-5 ">
+          <div className="grid max-sm:hidden grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 items-center justify-start gap-5 flex-wrap py-1 px-5 ">
             <Card title={"New"} icon="new" />
             <Card title={"New"} icon="new" />
             <Card title={"New"} icon="new" />
@@ -40,7 +40,7 @@ const page = () => {
               <p className="text-xs  font-extrabold ps-1">face cream</p>
             </div>
           </div>
-          <div className="grid sm:grid-cols-2 md:col-span-4 lg:grid-cols-4 xl:grid-cols-5 gap-5 p-2 px-5   h-[calc(100vh-20vh)] overflow-y-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4  xl:grid-cols-5 gap-5 p-2 px-5   h-[calc(100vh-20vh)] overflow-y-auto">
             {list.map((item, i) => (
               <>
                 <div>

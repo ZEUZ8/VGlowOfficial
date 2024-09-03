@@ -6,8 +6,8 @@ import Link from "next/link";
 
 const page = () => {
   return (
-    <div className=" grid grid-cols-10 ">
-      <div className="col-span-1 flex flex-col gap-2  items-center p-2 ">
+    <div className="">
+      {/* <div className="col-span-1 flex flex-col gap-2  items-center p-2 ">
         <img
           src="/onRock.png"
           className="w-[5rem] h-[5rem] rounded-md border cursor-pointer object-contain"
@@ -28,8 +28,8 @@ const page = () => {
           className="w-[5rem] h-[5rem] rounded-md border cursor-pointer object-contain"
           alt=""
         />
-      </div>
-      <div className="col-span-9  p-2">
+      </div> */}
+      <div className=" p-2">
         <div className=" rounded-lg grid lg:grid-cols-2  mb-4 ">
           <div className="grid grid-cols-2  gap-1 p-1">
             <div className="border border-gray-100 overflow-hidden img-container ">
@@ -388,7 +388,9 @@ const page = () => {
                     </div>
                   </div>
                 </div>
-                <hr className=" my-2" />
+                <div className="flex justify-center items-center ">
+                  <p className="text-blue-500 font-semibold text-xs underline underline-offset-2">KNOW MORE</p>
+                </div>
               </div>
             </div>
           </div>
