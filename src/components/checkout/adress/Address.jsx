@@ -3,7 +3,7 @@ import React from "react";
 const Address = ({ options }) => {
   return (
     <div
-      className="border border-gray-100 hover:border-gray-300 flex gap-4  rounded-md p-3 mb-4 shadow3"
+      className="border border-gray-100 hover:border-gray-300 flex gap-4  rounded-md p-3 mb-4 shadow3 "
     >
       <div className="">
         <input

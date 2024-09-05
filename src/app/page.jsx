@@ -90,7 +90,7 @@ export default function Home() {
 
         <div
           data-aos="fade-down-right"
-          className="max-xl:pb-[5rem] flex justify-center lg:col-span-2 xl:col-span-1"
+          className="max-xl:pb-[5rem] flex justify-center lg:col-span-2 xl:col-span-1 max-lg:mt-5"
         >
           {/* <div className="h-[100%] w-[70%] flex justify-center items-center ">
             <img

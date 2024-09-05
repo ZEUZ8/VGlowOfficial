@@ -1,9 +1,10 @@
 import React from "react";
 import Price from "./Price";
 
+
 const Details = () => {
   return (
-    <div className=" pt-4 pl-3 ">
+    <div className=" max-md:p-3 md:pt-4 md:pl-3 ">
       <div>
         <div className="py-2">
           <p className="text-sm font-semibold text-gray-600">

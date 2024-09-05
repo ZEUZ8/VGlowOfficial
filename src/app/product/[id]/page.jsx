@@ -61,7 +61,7 @@ const page = () => {
               />
             </div>
           </div>
-          <div className=" p-2 px-4">
+          <div className=" p-2 lg:px-4">
             <div className="py-4">
               <h2 className="text-2xl font-semibold">Vglow </h2>
             </div>
@@ -108,7 +108,7 @@ const page = () => {
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-2  py-3 pb-5">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2  py-3 pb-5">
               <div className=" border  rounded-md p-2 flex justify-center items-center shadow-special2 bg-rose-500 cursor-pointer">
                 <p className="text-white font-semibold">ADD TO BAG</p>
               </div>
