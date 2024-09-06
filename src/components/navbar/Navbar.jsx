@@ -7,7 +7,7 @@ import { IoBag } from "react-icons/io5";
 const Navbar = () => {
   const routing = useRouter();
   return (
-    <div className="flex justify-between items-center px-5 pt-5 max-lg:pb-5 ">
+    <div className="flex justify-between items-center px-5 pt-5  ">
       <div
         className="bebas-neue-regular cursor-pointer text-black"
         onClick={() => routing.push("/")}

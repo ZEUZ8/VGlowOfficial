@@ -40,7 +40,7 @@ const page = () => {
               <p className="text-xs  font-extrabold ps-1">face cream</p>
             </div>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4  xl:grid-cols-5 gap-5 p-2 px-5   h-[calc(100vh-20vh)] overflow-y-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4  xl:grid-cols-5 gap-5 p-2 lg:px-5   h-[calc(100vh-20vh)] overflow-y-auto">
             {list.map((item, i) => (
               <>
                 <div>

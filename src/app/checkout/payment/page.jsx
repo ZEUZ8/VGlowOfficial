@@ -12,7 +12,7 @@ export default function Payment(){
         <div className="grid lg:grid-cols-10 bg-white mx-auto">
           <div className="lg:col-span-3 lg:col-start-3   max-lg:px-4 p-2 pt-4 ">
             <div className="">
-              <p className="font-semibold text-gray-800 text-md">
+              <p className="font-semibold text-gray-800 text-md py-2">
                 Choose Payment Method
               </p>
             </div>

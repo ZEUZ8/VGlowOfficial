@@ -17,9 +17,9 @@ const Products = ({image,i}) => {
           alt="proudct Image"
         />
       </div>
-      <div className="p-1 row-span-4 max-h-[100%]">
-        <p className="font-semibold ">VGlow</p>
-        <p className="py-1 text-sm">Vlgow face whitening cream</p>
+      <div className="p-1 row-span-4 ">
+        <p className="font-semibold max-md:text-sm">VGlow</p>
+        <p className="py-1 text-xs lg:text-sm max-w-[100px] sm:max-w-[150px] md:max-w-[200px] xl:max-w-[300px] overflow-hidden text-ellipsis whitespace-nowrap ">Vlgow face whitening cream</p>
         <p className="text-xs font-thin">combo</p>
         <div className="flex justify-start items-center pt-1 ">
           <p className=" font-extralight text-xs"><IoIosStar/></p>

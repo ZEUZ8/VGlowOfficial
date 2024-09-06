@@ -29,7 +29,7 @@ const page = () => {
           alt=""
         />
       </div> */}
-      <div className=" p-2">
+      <div className=" lg:p-2">
         <div className=" rounded-lg grid lg:grid-cols-2  mb-4 ">
           <div className="grid grid-cols-2  gap-1 p-1">
             <div className="border border-gray-100 overflow-hidden img-container ">
