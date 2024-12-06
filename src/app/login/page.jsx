@@ -1,21 +1,28 @@
-'use client'
+"use client";
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { loginValidation } from "@/validation/user/login";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+
+  const router = useRouter();
+
   const onSubmit = async () => {
     try {
-      const response = await axios.post("/api/auth/login",values)
-      console.log(response,' the response in the ')
-    } catch (errors) {
-      console.log(
-        errors,
-        " error in the user login page, data sending funciton from the front end page"
-      );
+      const response = await axios.post("/api/auth/login", values);
+      console.log(response,' the respons')
+      if(response?.data?.msg === "login succesfull"){
+        toast.success(response?.data?.msg,)
+      }
+    } catch (err) {
+      console.log(err,' the response in the console',err.response.data.msg)
+      toast.error(err?.response?.data?.msg)
     }
   };
+
   const {
     values,
     errors,
@@ -30,13 +37,10 @@ const Login = () => {
     onSubmit,
   });
 
-  useEffect(() => {
-    console.log(errors, " the erros in the console");
-  }, [errors]);
-
   return (
-    <div className="bg-transparent  h-[83vh] flex justify-center items-center">
-      <div className=" w-[60%]  shadow-special  rounded-xl">
+    <div className="bg-transparent  h-[83vh] flex justify-center items-center max-lg:px-5">
+      <Toaster position="top-center" reverseOrder={false} />
+      <div className=" lg:w-[60%]  shadow-special  rounded-xl">
         <div className="grid  md:grid-cols-2  rounded-xl ">
           <div className="bg-white p-4 rounded-l-xl ">
             <div className=" p-4 ">

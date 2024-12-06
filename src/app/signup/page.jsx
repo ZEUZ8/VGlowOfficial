@@ -3,21 +3,31 @@ import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { signupValidation } from "@/validation/user/signup";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const Signup = () => {
 
-  const onSubmit = async (e) => {
+  const router = useRouter();
+
+  const onSubmit = async() => {
+    console.log('first in the consoe')
     try {
-      const response = await axios.post("/api/auth/register",values)
-      console.log(response, " register, success");
-      resetForm()
-    } catch (errors) {
-      console.log(
-        errors,
-        " error in the user login page, data sending funciton from the front end page"
-      );
+      const response = await axios.post("/api/auth/register", values);
+      if (response && response?.data?.msg == "register successful") {
+        console.log('sinan')
+        toast.success(response.data.msg, {
+          duration:1000
+        });
+        setTimeout(() => {
+          router.push("/products");
+        }, 1000);
+      }
+    } catch (err) {
+      toast.error(err?.response?.data?.msg)
     }
   };
+
   const {
     values,
     errors,
@@ -27,14 +37,19 @@ const Signup = () => {
     handleChange,
     resetForm,
   } = useFormik({
-    initialValues: { email: "", password: "", mobile: "", username: "" },
+    initialValues: { email: "", password: "", phone: "", username: "" },
     validationSchema: signupValidation,
     onSubmit,
   });
 
+  useEffect(()=>{
+    console.log(errors,' the erros')
+  },[errors])
+
   return (
-    <div className="bg-transparent  h-[83vh] flex justify-center items-center">
-      <div className=" w-[60%]  shadow-special  rounded-xl">
+    <div className="bg-transparent  h-[83vh] flex justify-center items-center max-lg:px-5">
+      <Toaster/>
+      <div className=" lg:w-[60%]  shadow-special  rounded-xl">
         <div className="grid  md:grid-cols-2  rounded-xl ">
           <div className="bg-white p-4 rounded-l-xl ">
             <div className=" p-4 ">
@@ -58,7 +73,11 @@ const Signup = () => {
                   value={values.username}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  className={` p-2 block w-full border bg-gray-50  border-gray-200 rounded-md shadow-special2 styled-input ${errors.username && !values.username && "placeholder:text-red-500"}`}
+                  className={` p-2 block w-full border bg-gray-50  border-gray-200 rounded-md shadow-special2 styled-input ${
+                    errors.username &&
+                    !values.username &&
+                    "placeholder:text-red-500"
+                  }`}
                 />
                 {errors.username && (
                   <p className="p-1 text-xs font-light text-red-500">
@@ -80,7 +99,9 @@ const Signup = () => {
                   value={values.phone}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  className={` p-2 block w-full border bg-gray-50  border-gray-200 rounded-md shadow-special2 styled-input ${errors.phone && !values.phone && "placeholder:text-red-500"}`}
+                  className={` p-2 block w-full border bg-gray-50  border-gray-200 rounded-md shadow-special2 styled-input ${
+                    errors.phone && !values.phone && "placeholder:text-red-500"
+                  }`}
                 />
                 {errors.phone && (
                   <p className="p-1 text-xs font-light text-red-500 italic">
@@ -103,7 +124,9 @@ const Signup = () => {
                   value={values.email}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  className={` p-2 block w-full border bg-gray-50  border-gray-200 rounded-md shadow-special2 styled-input ${errors.email && !values.email && "placeholder:text-red-500"}`}
+                  className={` p-2 block w-full border bg-gray-50  border-gray-200 rounded-md shadow-special2 styled-input ${
+                    errors.email && !values.email && "placeholder:text-red-500"
+                  }`}
                 />
                 {errors.email && (
                   <p className="p-1 text-xs font-light text-red-500">
@@ -126,7 +149,11 @@ const Signup = () => {
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={` p-2 block w-full border bg-gray-50  border-gray-200 rounded-md shadow-special2 styled-input ${errors.password && !values.password && "placeholder:text-red-500"}`}
+                  className={` p-2 block w-full border bg-gray-50  border-gray-200 rounded-md shadow-special2 styled-input ${
+                    errors.password &&
+                    !values.password &&
+                    "placeholder:text-red-500"
+                  }`}
                 />
                 {errors.password && (
                   <p className="p-1 text-xs font-light text-red-500">

@@ -2,7 +2,10 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { IoBag } from "react-icons/io5";
+import { IoBagOutline } from "react-icons/io5";
+import { IoPersonOutline } from "react-icons/io5";
+import { IoMdHeartEmpty } from "react-icons/io";
+import { IoIosSearch } from "react-icons/io";
 
 const Navbar = () => {
   const routing = useRouter();
@@ -17,21 +20,38 @@ const Navbar = () => {
       <div className="flex items-center justify-start gap-4 text-gray-600 font-normal text-sm cursor-pointer">
         {/* <div>Usage</div> */}
         <div className="text-black active:scale-90 Line">
-          <Link href="/products">Products</Link>
+          <Link href="/products">
+          <p className="text-lg pb-1">
+            <IoMdHeartEmpty/>
+          </p>
+          </Link>
         </div>
+      
+
         <div className="text-black active:scale-90 Line">
-          <Link href="/about">About</Link>
+          <Link href="/login">
+          <p className="text-lg pb-1"><IoPersonOutline/></p>
+          </Link>
         </div>
+
+        <div className="text-black active:scale-90 Line">
+          <Link href="/about">
+          <p className="text-xl pb-1 border-white text-gray-600">
+            <IoIosSearch/>
+          </p>
+          </Link>
+        </div>
+
         <div className="text-gray-700 active:scale-90 Line cursor-pointer">
-          <Link href="/bag">
+          <Link href="/checkout/cart">
             <p className="text-lg pb-1">
-              <IoBag />
+              <IoBagOutline />
             </p>
           </Link>
         </div>
-        <div className="text-black active:scale-90 Line">
+        {/* <div className="text-black active:scale-90 Line">
           <Link href="/login">Login</Link>{" "}
-        </div>
+        </div> */}
       </div>
     </div>
   );

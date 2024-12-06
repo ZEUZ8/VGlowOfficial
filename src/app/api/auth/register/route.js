@@ -1,17 +1,26 @@
-import { NextResponse } from "next/server"
+import axiosInstance from "@/lib/axios/instance";
+import { NextResponse } from "next/server";
 
-export  async function POST(req,res) {
-    if(req.method === 'POST'){
-        const body = await req.json();
-        console.log(body,' the body in the console')
-        try{
-            return NextResponse.json({msg:"success"})
-        }catch(err){
-            console.log(err,' error in the console')
-            return NextResponse.json({msg:"not able to find the body"})
-        }
-    }else{
-        return NextResponse.json({msg:"request must be post"})
+export const POST = async (req, res)=>{
+  console.log('getted in the register function')
+  try {
+    const body = await req.json();
+    const response = await axiosInstance.post(`http://localhost:6000/register`,{...body});
+    if (response.status === 200) {
+      // setCookie(response.data.to)
+      console.log(response?.data?.token, ' the data in the console')
+      return NextResponse.json({ msg: response?.data?.msg}, response?.data);
+    } else {
+      // Handle non-200 status codes gracefully
+      const errorMessage = response?.data?.msg ?? "Something went wrong"
+      return NextResponse.json({msg:errorMessage},{status: response.status ?? 401})
     }
-    
+  } catch (error) {
+    console.log(error,' the err')
+    return NextResponse.json(
+      { msg: error?.response?.data ?? "Error during Signup", error: error?.response?.data },
+      { status: 500 }
+    );
+  }
 }
+

@@ -1,18 +1,29 @@
-export default async function POST(req, res) {
-  if (req.method === "POST") {
-    try {
-      const body = await req.json();
-      const { email, password } = body;
-      if (email === "ptsinan8590@gmail.com" && password === "Fingers@8590") {
-        res.status(200).json({ message: "Login successful" });
-      } else {
-        res.status(200).json({ message: "Invalid credentials" });
-      }
-    } catch (error) {
-      console.error("Error parsing request body:", error);
-      res.status(200).json({ message: "Invalid request body" });
+import axios from "axios";
+import { NextResponse } from "next/server";
+import { getCookie, setCookie } from "../cookie";
+import axiosInstance from "@/lib/axios/instance";
+
+
+export const POST = async (req, res) => {
+  console.log('got in the api router')
+  try {
+    const body = await req.json();
+    const response = await axiosInstance.post(`http://localhost:6000/login`,{...body});
+    console.log(response,' the response')
+    if(response?.data?.msg === "login succesfull"){
+      return NextResponse.json(
+        { msg: response?.data?.msg, user: response?.data?.user },
+        { status: 200 }
+      );
+    }else{
+        const errorMessage = response?.data?.msg ?? "Can't find you, please try again"
+        return NextResponse.json({msg:errorMessage},{status:response.status ?? 401})
     }
-  } else {
-    res.status(200).json(`Method ${req.method} Not Allowed`);
+  } catch (err) {
+    console.log(err, "erro in the login api route handler");
+    return NextResponse.json({ msg: "Erorr in login" }, { status: 500 });
   }
-}
+};
+
+
+

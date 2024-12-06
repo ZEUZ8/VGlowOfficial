@@ -5,8 +5,10 @@ import { TiArrowForwardOutline } from "react-icons/ti";
 const About = () => {
   return (
     <div className="pt-5">
-
-      <div className=" grid grid-cols-2 p-2">
+      <div>
+        
+      </div>
+      {/* <div className=" grid grid-cols-2 p-2">
         <div className=" col-span-1 ">
           {" "}
           <div className=" flex justify-center items-center">
@@ -65,7 +67,7 @@ const About = () => {
             How To Use <TiArrowForwardOutline />
           </p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
