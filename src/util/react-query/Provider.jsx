@@ -4,11 +4,11 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { useState } from "react"
 
 const Provider = ({children}) => {
-    const [queryclient] = useState(()=> new queryclient())
+    const [queryclient] = useState(()=> new QueryClient())
   return (
     <QueryClientProvider client={queryclient}>
-        <ReactQueryDevtools initialIsOpen={false}/>
         {children}
+        <ReactQueryDevtools initialIsOpen={false}/>
     </QueryClientProvider>
   )
 }

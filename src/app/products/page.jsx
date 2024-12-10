@@ -1,10 +1,16 @@
 "use client";
 import Card from "@/components/products/Card";
 import Products from "@/components/products/Products";
+import useHydratedUser from "@/hooks/user/useHydratedUser";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import React, { useState } from "react";
 
 const page = () => {
+  const queryClient = useQueryClient();
+  const { data } = useHydratedUser();
+  console.log(data.user, " the user in the console");
+
   const list = [
     "/product.png",
     "/product.png",
@@ -42,13 +48,11 @@ const page = () => {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4  xl:grid-cols-5 gap-5 p-2 lg:px-5   h-[calc(100vh-20vh)] overflow-y-auto">
             {list.map((item, i) => (
-              <>
-                <div>
-                  <Link href="/product/0">
-                    <Products image={item} i={0} />
-                  </Link>
-                </div>
-              </>
+              <div key={i}>
+                <Link href="/product/0">
+                  <Products image={item}  />
+                </Link>
+              </div>
             ))}
           </div>
         </div>

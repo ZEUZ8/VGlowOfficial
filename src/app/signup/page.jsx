@@ -5,28 +5,75 @@ import { signupValidation } from "@/validation/user/signup";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import useHydratedUser from "@/hooks/user/useHydratedUser";
 
 const Signup = () => {
-
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const { data } = useHydratedUser();
 
-  const onSubmit = async() => {
-    console.log('first in the consoe')
-    try {
-      const response = await axios.post("/api/auth/register", values);
-      if (response && response?.data?.msg == "register successful") {
-        console.log('sinan')
-        toast.success(response.data.msg, {
-          duration:1000
-        });
+  // if the user have already registered or logined then redirecting to the products page
+  useEffect(() => {
+    if (data.user || data.token) {
+      router.push("/products");
+    }
+  }, [data]);
+
+  const {mutate} = useMutation({
+
+    mutationFn: async (values) => {
+      const response = await axios.push("/api/auth/register", values);
+      return response.data;
+    },
+
+    onSuccess: (data) => {
+      if (data?.msg === "register successful") {
+        const { token, ...userWithoutToken } = data.user;
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", userWithoutToken);
+
+        queryClient.invalidateQueries(["user"]);
+
+        toast.success(data.msg);
+
         setTimeout(() => {
           router.push("/products");
-        }, 1000);
+        }, 800);
       }
-    } catch (err) {
-      toast.error(err?.response?.data?.msg)
-    }
-  };
+    },
+    
+    onError: (error) => {
+      toast.error(error?.response?.data?.msg || "Signup Failed");
+    },
+  });
+
+  // const onSubmit = async () => {
+  //   try {
+  //     const response = await axios.post("/api/auth/register", values);
+  //     if (response && response?.data?.msg == "register successful") {
+  //       const { token, ...userWithoutToken } = data.user;
+  //       localStorage.setItem("token", token);
+  //       localStorage.setItem("user", JSON.stringify(userWithoutToken));
+
+  //       //invalidating the query for the updating the state with latest data;
+  //       queryClient.invalidateQueries("user");
+
+  //       toast.success(response.data.msg);
+
+  //       // Redirecting the user to the products page
+  //       setTimeout(() => {
+  //         router.push("/products");
+  //       }, 800);
+  //     }
+  //   } catch (err) {
+  //     toast.error(err?.response?.data?.msg);
+  //   }
+  // };
+
+  const onSubmit = ()=>{
+    mutate(values)
+  }
 
   const {
     values,
@@ -42,13 +89,13 @@ const Signup = () => {
     onSubmit,
   });
 
-  useEffect(()=>{
-    console.log(errors,' the erros')
-  },[errors])
+  useEffect(() => {
+    console.log(errors, " the erros");
+  }, [errors]);
 
   return (
     <div className="bg-transparent  h-[83vh] flex justify-center items-center max-lg:px-5">
-      <Toaster/>
+      <Toaster />
       <div className=" lg:w-[60%]  shadow-special  rounded-xl">
         <div className="grid  md:grid-cols-2  rounded-xl ">
           <div className="bg-white p-4 rounded-l-xl ">

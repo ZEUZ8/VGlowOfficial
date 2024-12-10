@@ -62,7 +62,7 @@ export default function Home() {
                   <LiaStarHalfAltSolid />
                 </p>
               </div>
-              <div className="">
+              <div>
                 <p className="text-sm">206 reviews</p>
               </div>
             </div>

@@ -5,22 +5,64 @@ import { loginValidation } from "@/validation/user/login";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import useHydratedUser from "@/hooks/user/useHydratedUser";
 
 const Login = () => {
-
   const router = useRouter();
+  const queryClient = useQueryClient();
 
-  const onSubmit = async () => {
-    try {
+  const {data} = useHydratedUser();
+
+  useEffect(()=>{
+    if(data.token)router.push('/products')
+  },[data.token])
+
+  // const onSubmit = async () => {
+  //   try {
+  //     const response = await axios.post("/api/auth/login", values);
+  //     console.log(response,' the respons')
+  //     if(response?.data?.msg === "login succesfull"){
+  //       toast.success(response?.data?.msg,)
+  //       setTimeout(()=>{
+  //         router.push("/products")
+  //       },800)
+  //     }
+  //   } catch (err) {
+  //     console.log(err,' the response in the console',err.response.data.msg)
+  //     toast.error(err?.response?.data?.msg)
+  //   }
+  // };
+
+  const {mutate} = useMutation({
+    mutationFn: async (values) => {
       const response = await axios.post("/api/auth/login", values);
-      console.log(response,' the respons')
-      if(response?.data?.msg === "login succesfull"){
-        toast.success(response?.data?.msg,)
+      return response.data;
+    },
+
+    onSuccess: (data) => {
+      if (data?.msg === "login succesfull") {
+        const { token, ...userWithoutToken } = data.user;
+        localStorage.setItem('token',token)
+        localStorage.setItem("user", JSON.stringify(userWithoutToken));
+
+        queryClient.invalidateQueries("user")
+
+        toast.success(data.msg);
+
+        setTimeout(() => {
+          router.push("/products");
+        }, 800);
       }
-    } catch (err) {
-      console.log(err,' the response in the console',err.response.data.msg)
-      toast.error(err?.response?.data?.msg)
-    }
+    },
+    
+    onError: (error) => {
+      toast.error(error?.response?.data?.msg || "Login failed");
+    },
+  });
+
+  const onSubmit = () => {
+    mutate(values);
   };
 
   const {
@@ -80,7 +122,7 @@ const Login = () => {
                   Password
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   id="password"
                   name="password"
                   placeholder="Password"

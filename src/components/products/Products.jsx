@@ -4,8 +4,8 @@ import { LiaStarHalfAltSolid } from "react-icons/lia";
 
 const Products = ({image,i}) => {
   const [hover,setHover] = useState(false);
+
   const handleHover = ()=>{
-    console.log(hover,' thel state in the consle')
     setHover(prev => true)
   }
   return (
