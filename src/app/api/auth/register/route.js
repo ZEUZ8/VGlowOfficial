@@ -5,7 +5,7 @@ export const POST = async (req, res)=>{
   console.log('getted in the register function')
   try {
     const body = await req.json();
-    const response = await axiosInstance.post(`http://localhost:6000/register`,{...body});
+    const response = await axiosInstance.post(`/register`,{...body});
     if (response.status === 200) {
       // setCookie(response.data.to)
       console.log(response?.data?.token, ' the data in the console')

@@ -71,7 +71,7 @@ export default function Home() {
           <div className="flex  justify-center items-start ">
             <div className="border border-gray-800 p-3 rounded-md cursor-pointer active:scale-95">
               <p className="">
-                <Link href="/products">Shop Now</Link>
+                <Link href="/user/products">Shop Now</Link>
               </p>
             </div>
           </div>

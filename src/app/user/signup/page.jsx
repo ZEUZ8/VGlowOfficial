@@ -16,7 +16,7 @@ const Signup = () => {
   // if the user have already registered or logined then redirecting to the products page
   useEffect(() => {
     if (data.user || data.token) {
-      router.push("/products");
+      router.push("/user/products");
     }
   }, [data]);
 
@@ -38,7 +38,7 @@ const Signup = () => {
         toast.success(data.msg);
 
         setTimeout(() => {
-          router.push("/products");
+          router.push("/user/products");
         }, 800);
       }
     },

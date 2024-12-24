@@ -20,7 +20,7 @@ const Navbar = () => {
       <div className="flex items-center justify-start gap-4 text-gray-600 font-normal text-sm cursor-pointer">
         {/* <div>Usage</div> */}
         <div className="text-black active:scale-90 Line">
-          <Link href="/products">
+          <Link href="/user/products">
           <p className="text-lg pb-1">
             <IoMdHeartEmpty/>
           </p>
@@ -29,13 +29,13 @@ const Navbar = () => {
       
 
         <div className="text-black active:scale-90 Line">
-          <Link href="/login">
+          <Link href="/user/login">
           <p className="text-lg pb-1"><IoPersonOutline/></p>
           </Link>
         </div>
 
         <div className="text-black active:scale-90 Line">
-          <Link href="/about">
+          <Link href="/user/about">
           <p className="text-xl pb-1 border-white text-gray-600">
             <IoIosSearch/>
           </p>
@@ -43,14 +43,14 @@ const Navbar = () => {
         </div>
 
         <div className="text-gray-700 active:scale-90 Line cursor-pointer">
-          <Link href="/checkout/cart">
+          <Link href="/user/checkout/cart">
             <p className="text-lg pb-1">
               <IoBagOutline />
             </p>
           </Link>
         </div>
         {/* <div className="text-black active:scale-90 Line">
-          <Link href="/login">Login</Link>{" "}
+          <Link href="/user/login">Login</Link>{" "}
         </div> */}
       </div>
     </div>

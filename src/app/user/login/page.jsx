@@ -7,6 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useHydratedUser from "@/hooks/user/useHydratedUser";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const router = useRouter();
@@ -15,7 +16,7 @@ const Login = () => {
   const {data} = useHydratedUser();
 
   useEffect(()=>{
-    if(data.token)router.push('/products')
+    if(data.token)router.push('/user/products')
   },[data.token])
 
   // const onSubmit = async () => {
@@ -43,15 +44,15 @@ const Login = () => {
     onSuccess: (data) => {
       if (data?.msg === "login succesfull") {
         const { token, ...userWithoutToken } = data.user;
-        localStorage.setItem('token',token)
-        localStorage.setItem("user", JSON.stringify(userWithoutToken));
+        Cookies.set('token',token)
+        Cookies.set("user", JSON.stringify(userWithoutToken));
 
         queryClient.invalidateQueries("user")
 
         toast.success(data.msg);
 
         setTimeout(() => {
-          router.push("/products");
+          router.push("/user/products");
         }, 800);
       }
     },

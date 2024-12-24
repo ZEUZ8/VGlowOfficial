@@ -7,7 +7,7 @@ import axiosInstance from "@/lib/axios/instance";
 export const POST = async (req, res) => {
   try {
     const body = await req.json();
-    const response = await axiosInstance.post(`http://localhost:6000/login`,{...body});
+    const response = await axiosInstance.post(`/login`,{...body});
     if(response?.data?.msg === "login succesfull"){
       return NextResponse.json(
         { msg: response?.data?.msg, user: response?.data?.user },

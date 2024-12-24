@@ -113,7 +113,7 @@ const page = () => {
                 <p className="text-white font-semibold">ADD TO BAG</p>
               </div>
               <div className=" border rounded-md p-2 flex justify-center items-center shadow-special2 cursor-pointer">
-                <Link href="/checkout/cart">
+                <Link href="/user/checkout/cart">
                   {" "}
                   <p className=" font-semibold">BUY </p>
                 </Link>

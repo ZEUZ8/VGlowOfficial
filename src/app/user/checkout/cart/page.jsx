@@ -111,7 +111,7 @@ const page = () => {
             </div>
           </div>
           <div className="bg-red-50 my-4">
-            <Link href="/checkout/address">
+            <Link href="/user/checkout/address">
               <div className="p-2 bg-rose-500  rounded-sm flex justify-center items-center cursor-pointer ">
                 <p className="text-white font-medium  ">Place Order</p>
               </div>
