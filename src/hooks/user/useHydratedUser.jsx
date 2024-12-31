@@ -24,7 +24,8 @@ const useHydratedUser = () => {
   const queryClient = useQueryClient();
 
   function getUser(){
-    return  JSON.parse(Cookies.get("user")) ?? null
+    const user = Cookies.get("user")
+    return  user ? JSON.parse(user) : null
   }
   function getToken(){
     return Cookies.get("token") ?? null

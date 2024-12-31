@@ -1,14 +1,10 @@
 "use client";
 import Card from "@/components/products/Card";
 import Products from "@/components/products/Products";
-import useHydratedUser from "@/hooks/user/useHydratedUser";
-import {useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import React, { useState } from "react";
 
 const page = () => {
-  const queryClient = useQueryClient();
-  const { data } = useHydratedUser();
 
   const list = [
     "/product.png",

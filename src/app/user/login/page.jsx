@@ -13,11 +13,18 @@ const Login = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const {data} = useHydratedUser();
+  const {data,onSuccess} = useHydratedUser();
 
-  useEffect(()=>{
-    if(data.token)router.push('/user/products')
-  },[data.token])
+  // useEffect(()=>{
+  //   console.log(data,' the token',data.user.role)
+  //   if(data.token){
+  //     if(data?.user?.role === 'User'){
+  //       router.push('/user/products')
+  //     }else if(data?.user === "Admin"){
+  //       router.push('/admin')
+  //     }
+  //   }
+  // },[data,router,onSuccess])
 
   // const onSubmit = async () => {
   //   try {

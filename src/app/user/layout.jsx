@@ -9,14 +9,14 @@ export default function UserLayout({ children }) {
 
   const isAuthRoutes = ["/login", "/signup", "/products", "/product"].includes(pathname);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const user = localStorage.getItem("user");
-    console.log('user layout--- token', token)
-    if (!token && !isAuthRoutes) {
-      console.log("user without token");
-      router.push("/user/login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   const user = localStorage.getItem("user");
+  //   console.log('user layout--- token', token)
+  //   if (!token && !isAuthRoutes) {
+  //     console.log("user without token");
+  //     router.push("/user/login");
+  //   }
+  // }, []);
   return <div>{children}</div>;
 }
