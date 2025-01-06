@@ -1,14 +1,11 @@
-import axios from "axios";
 import { NextResponse } from "next/server";
-import { getCookie, setCookie } from "../cookie";
 import axiosInstance from "@/lib/axios/instance";
 
 
 export const POST = async (req, res) => {
-  console.log(req.url,' the url in the console')
   try {
     const body = await req.json();
-    const response = await axiosInstance.post(`/login`,{...body});
+    const response = await axiosInstance.post(`/admin/login`,{...body});
     if(response?.data?.msg === "login succesfull"){
       return NextResponse.json(
         { msg: response?.data?.msg, user: response?.data?.user },
@@ -20,7 +17,7 @@ export const POST = async (req, res) => {
     }
   } catch (err) {
     console.log(err.response, "erro in the login api route handler");
-    return NextResponse.json({ msg: "Erorr in login" }, { status: 500 });
+    return NextResponse.json({ msg: "Erorr in admin login" }, { status: 500 });
   }
 };
 

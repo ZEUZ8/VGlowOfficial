@@ -23,7 +23,8 @@ const Signup = () => {
   const {mutate} = useMutation({
 
     mutationFn: async (values) => {
-      const response = await axios.push("/api/auth/register", values);
+      const response = await axios.post("/api/auth/register", values);
+      console.log(response, 'the response inteh front end')
       return response.data;
     },
 
@@ -44,6 +45,7 @@ const Signup = () => {
     },
     
     onError: (error) => {
+      console.log(error)
       toast.error(error?.response?.data?.msg || "Signup Failed");
     },
   });

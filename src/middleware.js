@@ -7,12 +7,13 @@ import { NextResponse } from "next/server";
 export function middleware(request) {
   // For other paths, continue without changes
   const cookies = request.cookies;
-  const user = JSON.parse(cookies.get("user")?.value) || null;
+  const user = cookies.get("user")?.value || null;
+  if(user)JSON.parse(user)
   const token = cookies.get("token")?.value || null;
 
   const pathname = request?.nextUrl?.pathname;
 
-  const privateRoutes = ["/profile", "/cart", "/bag", "/checkout"];
+  const privateRoutes = ["/profile", "/cart", "/bag", "/checkout",'/admin'];
   const publicRoutes = ["/login", "/signup", "/"];
   const authRoutes = ['/login','/signup']
 
@@ -31,13 +32,11 @@ export function middleware(request) {
   // Check if the route is public or private
   const isPrivateRoute = privateRoutes.some((route) => pathname.includes(route));
   const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route));
-  console.log(pathname)
-  console.log('pricvate route status --- ',isPrivateRoute, 'publict route status --- ',isPublicRoute)
+  const isAuthRoutes = authRoutes.some((route)=>pathname.includes(route))
 
    // Redirect logged-in users away from login or signup pages
-   if(token && authRoutes.some((route)=> pathname.includes(route))){
-    console.log(user.role,role, "the tow roles oncosling")
-    if(role === 'admin' && user.role === "Admin"){
+   if(isAuthRoutes && token){
+    if(role === 'admin' && user?.role === "Admin"){
       return NextResponse.redirect(new URL("/admin", request.url));
     }
     if(role === 'user' && user?.role === "User"){
@@ -47,10 +46,10 @@ export function middleware(request) {
 
    // Authorization logic
    if (role === "admin") {
-    console.log('uers is admin')
-    // if (!token || user?.role !== 'admin') {
-    //   console.log('admin dont have token')
-    //   console.log("Admin trying to access without token");
+    // if(isAuthRoutes){
+    //   return NextResponse.next()
+    // }
+    // if (!token || user?.role !== 'Admin') {
     //   return NextResponse.redirect(new URL("/admin/login", request.url));
     // }
     // Allow admin access
@@ -64,7 +63,6 @@ export function middleware(request) {
     }
 
     if (isPrivateRoute && !token) {
-      console.log("User trying to access private route without token");
       return NextResponse.redirect(new URL("/user/login", request.url));
     }
 
@@ -73,10 +71,9 @@ export function middleware(request) {
   }
 
   // If no role or invalid path
-  console.log("Unauthorized access attempt");
   return NextResponse.redirect(new URL("/login", request.url));
 
 }
 export const config = {
-  matcher: ["/admin/:path*", "/user/:path*"],
+  matcher: ["/admin/:path*", "/user/:path*",'/admin/login'],
 };
