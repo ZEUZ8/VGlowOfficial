@@ -6,19 +6,13 @@ import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const pathname = usePathname();
+  //getting the user from the path and conditionlay rendering the navbar for users and admin
   const getUserRole = () => {
-    if (pathname.startsWith("/admin")) {
-      return "admin";
-    }
-    if (pathname.startsWith("/user")) {
-      return "user";
-    }
-    return null;
+    return pathname.startsWith("/admin");
   };
   const role = getUserRole();
-  console.log(role,' the role in the console and ready to update ')
 
-  return <>{role === "user" ? <UserNavbar /> : <AdminNavbar />}</>;
+  return <>{role ? <AdminNavbar /> : <UserNavbar />}</>;
 };
 
 export default Navbar;
