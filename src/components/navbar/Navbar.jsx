@@ -11,8 +11,8 @@ const Navbar = () => {
     return pathname.startsWith("/admin");
   };
   const role = getUserRole();
+  return <>{role  ? <AdminNavbar /> : <UserNavbar />}</>;
 
-  return <>{role ? <AdminNavbar /> : <UserNavbar />}</>;
 };
 
 export default Navbar;

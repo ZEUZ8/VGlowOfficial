@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import Footer from "@/components/footer/Footer";
 import Link from "next/link";
 import Products from "@/components/products/Products";
+import { Input } from "@/components/ui/input";
 
 export default function Home() {
   useEffect(() => {
@@ -34,6 +35,7 @@ export default function Home() {
               </p>
             </div>
           </div>
+          <Input>sinan</Input>
 
           <div>
             <div className="flex flex-col justify-center items-center px-2">

@@ -6,10 +6,10 @@ const Footer = () => {
   return (
     <>
       <div className="grid max-sm:grid-cols-1 grid-cols-2  lg:grid-cols-4 gap-5 mt-5 cursor-pointer">
-        <Link href="/departmentreport">
+        <Link href="/admin/products">
           <div className="shadow-special dark:shadow-special2 rounded-xl p-4 grid grid-cols-5 items-center text-center">
             <div className="col-span-4  max-md:col-span-3 max-md:col-start-2  mx-auto">
-              <p className="text-[#F7A500]">Sales Man Report</p>
+              <p className="text-[#F7A500]">Products Report</p>
             </div>
             <div className="grid justify-self-end items-center col-start-5 col-span-1">
               <p className="text-[#F7A500]">
