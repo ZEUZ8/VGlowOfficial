@@ -35,7 +35,6 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <Input>sinan</Input>
 
           <div>
             <div className="flex flex-col justify-center items-center px-2">

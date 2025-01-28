@@ -1,0 +1,14 @@
+.border-dashed-custom {
+  border-width: 5px; /* Adjust thickness */
+  border-style: dashed;
+  border-color: transparent; /* Required for border-image to work */
+  border-image: repeating-linear-gradient(
+      to right,
+      black 0,
+      black 10px,
+      /* Dash length */ transparent 10px,
+      transparent 20px /* Space length */
+    )
+    1;
+  border-image-slice: 1;
+}

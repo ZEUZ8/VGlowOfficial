@@ -4,6 +4,7 @@ import { MdArrowBack } from "react-icons/md";
 import { LuSun } from "react-icons/lu";
 import { FaMoon } from "react-icons/fa";
 import Link from "next/link";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 const AdminNavbar = () => {
   const [theme, setTheme] = useState("");
@@ -16,9 +17,10 @@ const AdminNavbar = () => {
   };
 
   return (
-    <div className="flex justify-between p-4 py-5 items-start">
+    <div className="flex justify-between p-4 py-5 items-start  ">
       <div className="">
         {/* {page === "Home" ? ( */}
+        {/* <div className="lg:hidden"><SidebarTrigger /></div> */}
         <Link href="/admin">
           <div className="text-lg text-black dark:text-white hover:cursor-pointer">
             Home
@@ -31,7 +33,7 @@ const AdminNavbar = () => {
           </div>
         )} */}
       </div>
-      <div className="flex gap-5 items-center ">
+      <div className="flex gap-5 items-center  ">
         <p className="text-sm text-[#FF1A1A] hover:cursor-pointer">Log Out</p>
         <p className="text-lg hover:cursor-pointer" onClick={toggleTheme}>
           {theme !== "light" ? (

@@ -4,6 +4,11 @@
 @tailwind utilities;
 
 
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 /* Increased specificity for the class selector */
 body .bebas-neue-regular {
   font-family: "Bebas Neue", sans-serif;  /* Bebas Neue as preferred, fallback to sans-serif */
