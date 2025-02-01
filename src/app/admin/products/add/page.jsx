@@ -7,14 +7,39 @@ import Navbar from "./Navbar";
 import ImageUpload from "./imageUpload";
 import Category from "./Category";
 import { useFormik } from "formik";
+import toast, { Toaster } from "react-hot-toast";
 import { productValidation } from "@/validation/admin/product";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 
 const page = () => {
   const [sizes, setSizes] = useState([50, 60, 70, 45, 30, 15]);
-  const [selected, setSelected] = useState([]);
 
+  const filters = [
+    { time: ["Day", "Night", "Both"] },
+    {
+      Brands: [
+        "Cetaphil",
+        "VGlow",
+        "Deconstruct",
+        "Lipa",
+        "Plix",
+        "UVDox",
+        "Minimalist",
+      ],
+    },
+    {
+      skinType: ["Oily", "Dry", "Combination", "All Skin"],
+    },
+  ];
+
+  const initialFilters = filters.reduce((acc, filter) => {
+    Object.keys(filter).forEach((key) => {
+      // If filter has multiple options, create an array for those options
+      acc[key] = ""; // Set default as empty string or array
+    });
+    return acc;
+  }, {});
 
   const { mutate } = useMutation({
     mutationFn: async (values) => {
@@ -23,8 +48,14 @@ const page = () => {
     },
 
     onSuccess: (data) => {
-      if (data?.msg === "product added") {
-        toast.success(data.msg);
+      resetForm();
+      console.log(data.msg,data.status,data,' consoling al response in the console')
+      if(data?.msg === "Product created successfully"){
+        console.log(data?.msg)
+        toast.success("Product Added")
+      }else{
+        console.log('chumma',data?.msg)
+        toast.error(data?.msg)
       }
     },
 
@@ -34,7 +65,7 @@ const page = () => {
   });
 
   const onSubmit = () => {
-    mutate(values)
+    mutate(values);
   };
 
   const formik = useFormik({
@@ -43,11 +74,12 @@ const page = () => {
       productDescription: "",
       mainCategory: "",
       subCategory: "",
-      basePricing: null,
-      stock: null,
+      basePricing: '',
+      stock: '',
       discount: null,
       discountType: "",
       sizes: productValidation.fields.sizes.default() ?? [],
+      filters: initialFilters ?? "",
     },
     validationSchema: productValidation,
     onSubmit,
@@ -69,8 +101,10 @@ const page = () => {
     console.log(errors, " consoling the errors");
   }, [errors]);
 
+
   return (
     <div className="">
+      <Toaster position="top-center" reverseOrder={false} />
       <Navbar handleSubmit={handleSubmit} />
       <div className="p-2 max-h-[90vh] overflow-y-auto ">
         <div className="grid grid-cols-10 gap-3">
@@ -117,7 +151,7 @@ const page = () => {
                   )}
                 </div>
                 <div>
-                  <Category formik={formik} />
+                  <Category formik={formik} filters={filters} />
                 </div>
               </div>
               <div>
@@ -135,10 +169,10 @@ const page = () => {
                 </div>
                 <div className="py-2">
                   <div className="rounded-lg flex flex-wrap gap-2  p-2 ">
-                    {sizes.map((item) => {
+                    {sizes.map((item,i) => {
                       const selectedSize = values.sizes.includes(item);
                       return (
-                        <div>
+                        <div key={i}>
                           <div
                             onClick={() => {
                               !selectedSize &&

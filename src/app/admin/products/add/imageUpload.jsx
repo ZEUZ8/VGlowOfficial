@@ -41,8 +41,8 @@ const ImageUpload = () => {
         </div>
         <div className="grid grid-cols-4 gap-2 p-1 py-2  ">
           {images?.length &&
-            images.map((item) => (
-              <div className="overflow-hidden rounded-lg aspect-w-1 h-[6rem]">
+            images.map((item,i) => (
+              <div className="overflow-hidden rounded-lg aspect-w-1 h-[6rem]" key={i}>
                 <img
                   src={item}
                   className="object-contain w-full h-full "

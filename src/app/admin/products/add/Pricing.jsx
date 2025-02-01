@@ -2,7 +2,7 @@ import { Plus } from "lucide-react";
 import React from "react";
 
 const Pricing = ({ formik }) => {
-  const { values, errors, touched, handleBlur, handleChange, resetForm } =
+  const { values, errors, touched, handleBlur, handleChange} =
     formik;
   return (
     <div className="">
@@ -78,7 +78,7 @@ const Pricing = ({ formik }) => {
                 onBlur={handleBlur}
                 className="w-full border border-gray-200  p-2 px-3 bg-gray-200 rounded-lg text-gray-500 text-sm"
               >
-                <option value="" disabled="disabled" selected="true">
+                <option value="" disabled="disabled" selected={true}>
                   Discount Type
                 </option>
                 <option value="diwali">Diwali</option>

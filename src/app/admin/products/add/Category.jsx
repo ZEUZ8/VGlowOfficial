@@ -1,8 +1,8 @@
 import { Plus } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const Category = ({ formik }) => {
-  const { values, errors, touched, handleBlur, handleChange, resetForm } =
+const Category = ({ formik, filters }) => {
+  const { values, errors, touched, handleBlur, handleChange, setFieldValue } =
     formik;
 
   const [mainCategory, setMainCategory] = useState([
@@ -21,43 +21,6 @@ const Category = ({ formik }) => {
     "Serum",
     "Toner",
   ]);
-
-  const [skinType, setSkinType] = useState([
-    "Oily",
-    "Dry",
-    "Combination",
-    "All Skin",
-  ]);
-
-  const [brands, setBrands] = useState([
-    "Cetaphil",
-    "VGlow",
-    "Deconstruct",
-    "Lipa",
-    "Plix",
-    "UVDox",
-    "Minimalist",
-  ]);
-
-  const [time, setTime] = useState([]);
-
-  const filters = [
-    { time: ["Day", "Night", "Both"] },
-    {
-      Brands: [
-        "Cetaphil",
-        "VGlow",
-        "Deconstruct",
-        "Lipa",
-        "Plix",
-        "UVDox",
-        "Minimalist",
-      ],
-    },
-    {
-      skinType: ["Oily", "Dry", "Combination", "All Skin"],
-    },
-  ];
 
   return (
     <div>
@@ -78,11 +41,11 @@ const Category = ({ formik }) => {
                   className="border border-gray-200  bg-gray-200 rounded-lg p-2 py-3 pr-3 text-sm w-full"
                   id="input"
                 >
-                  <option value="" selected="true" disabled="disabled">
+                  <option value="" selected={true} disabled="disabled">
                     Main Category
                   </option>
                   {mainCategory.map((item, i) => (
-                    <option key={i} value="Face Wash" className=" font-medium">
+                    <option key={i} value={item} className=" font-medium">
                       {item}
                     </option>
                   ))}
@@ -111,16 +74,18 @@ const Category = ({ formik }) => {
                   value={values.subCategory}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  className={`border border-gray-200  bg-gray-200 rounded-lg p-2 py-3 pr-3 text-sm w-full  ${!values.mainCategory && "text-gray-600"}`}
+                  className={`border border-gray-200  bg-gray-200 rounded-lg p-2 py-3 pr-3 text-sm w-full  ${
+                    !values.mainCategory && "text-gray-600"
+                  }`}
                   id="input"
                   disabled={!values.mainCategory}
                 >
                   {values.mainCategory ? (
-                    <option value="" selected="true" disabled="disabled">
+                    <option value="" selected={true} disabled="disabled">
                       Sub Category
                     </option>
                   ) : (
-                    <option value="" selected="true" disabled="disabled">
+                    <option value="" selected={true} disabled="disabled">
                       Select Main Category
                     </option>
                   )}
@@ -149,16 +114,23 @@ const Category = ({ formik }) => {
             <p className="p-1 text-sm ">Filters</p>
             <div className="flex gap-3 flex-wrap py-2">
               {/* select for skin type */}
-              {filters.map((filter,i) => {
+              {filters.map((filter, i) => {
                 const filterName = Object.keys(filter)[0];
-                const filterOption = filter[filterName]
+                const filterOption = filter[filterName];
+                // console.log(values.filters[0][filterName],' the filter value')
                 return (
                   <select
+                    key={i}
                     name={filterName}
+                    onChange={(e) => {
+                      setFieldValue(`filters.${filterName}`, e.target.value);
+                    }}
+                    onBlur={handleBlur}
+                    value={values.filters?.[filterName] || ""}
                     className="rounded-full shadow-sm  bg-white border border-gray-400 text-sm text-gray-700 appearance-none p-2 px-3 text-center"
                     id="skin Type"
                   >
-                    <option value="" selected="true" disabled="disabled">
+                    <option value="" selected={true} disabled="disabled">
                       {filterName}
                     </option>
                     {filterOption.map((item, i) => (
@@ -176,7 +148,7 @@ const Category = ({ formik }) => {
                 className="rounded-full shadow-sm  bg-white border border-gray-400 text-sm text-gray-700 appearance-none p-2 px-3 text-center"
                 id="skin Type"
               >
-                <option value="" selected="true" disabled="disabled">
+                <option value="" selected={true} disabled="disabled">
                   Brand
                 </option>
                 {brands.map((item, i) => (
@@ -192,7 +164,7 @@ const Category = ({ formik }) => {
                 className="rounded-full shadow-sm  bg-white border border-gray-400 text-sm text-gray-700 appearance-none p-2 px-3 text-center"
                 id="skin Type"
               >
-                <option value="" selected="true" disabled="disabled">
+                <option value="" selected={true} disabled="disabled">
                   Time
                 </option>
                 {time.map((item, i) => (
