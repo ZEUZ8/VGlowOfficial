@@ -108,7 +108,7 @@ const page = () => {
       <Navbar handleSubmit={handleSubmit} />
       <div className="p-2 max-h-[90vh] overflow-y-auto ">
         <div className="grid grid-cols-10 gap-3">
-          <div className="col-span-6">
+          <div className="col-span-10 lg:col-span-6">
             <div className="grid gap-5">
               <div className=" border border-gray-50 rounded-lg py-2 px-4 bg-gray-100">
                 <h1 className="py-2 text-lg font-medium">
@@ -160,7 +160,7 @@ const page = () => {
             </div>
           </div>
 
-          <div className="col-span-4">
+          <div className="col-span-10 lg:col-span-4">
             <ImageUpload />
             <div>
               <div className="bg-gray-100 border border-gray-100 rounded-lg my-3 px-4 py-2">
@@ -178,7 +178,7 @@ const page = () => {
                               !selectedSize &&
                                 setFieldValue("sizes", [...values.sizes, item]);
                             }}
-                            className={`flex justify-between items-center w-fit border rounded-full px-3 py-2 border-black gap-1 cursor-pointer ${
+                            className={`flex justify-between items-center w-fit border rounded-full px-2 lg:px-3  py-2 lg:py-2 border-black gap-1 cursor-pointer ${
                               selectedSize && "border-green-300 bg-green-300"
                             }`}
                           >

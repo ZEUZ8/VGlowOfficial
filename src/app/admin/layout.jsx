@@ -11,7 +11,7 @@ export default function Layout({ children }) {
       <SidebarProvider className=" p-2 ">
         <AppSidebar />
         <div className="w-full">
-          <div className="p-2 px-3 lg:py-4  border-gray-400 flex justify-between  ">
+          <div className="py-2  pr-3 pl-1 lg:py-4 flex justify-between  ">
             <div className="flex justify-center items-center">
               <div className="md:hidden">
                 <SidebarTrigger />

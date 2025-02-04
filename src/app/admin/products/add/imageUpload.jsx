@@ -45,13 +45,13 @@ const ImageUpload = () => {
               <div className="overflow-hidden rounded-lg aspect-w-1 h-[6rem]" key={i}>
                 <img
                   src={item}
-                  className="object-contain w-full h-full "
+                  className="object-cover w-full h-full "
                   alt="product img"
                 />
               </div>
             ))}
           {images.length < 4 && (
-            <div className="overflow-hidden rounded-lg flex justify-center items-center border border-dashed border-gray-400 cursor-pointer">
+            <div className="overflow-hidden rounded-lg flex justify-center items-center border border-dashed border-gray-400 cursor-pointer ">
               <input
                 type="file"
                 accept="image/*"

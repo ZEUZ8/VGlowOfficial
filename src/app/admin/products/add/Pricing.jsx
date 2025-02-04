@@ -88,7 +88,7 @@ const Pricing = ({ formik }) => {
               </select>
               <div className="cursor-pointer ">
                 <div className="p-2  px-3 flex justify-center items-center border rounded-lg bg-gray-200">
-                  <p className="text-sm text-gray-700">Add</p>
+                  <p className="max-md:hidden text-sm text-gray-700">Add</p>
                   <Plus className="h-4 w-4" />
                 </div>
               </div>

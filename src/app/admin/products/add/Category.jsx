@@ -31,7 +31,7 @@ const Category = ({ formik, filters }) => {
         <div>
           <div className="py-2">
             <p className="p-1 text-sm">Main Category</p>
-            <div className="grid grid-cols-10">
+            <div className="grid grid-cols-10 ">
               <div className="col-span-8">
                 <select
                   name="mainCategory"
@@ -51,9 +51,10 @@ const Category = ({ formik, filters }) => {
                   ))}
                 </select>
               </div>
-              <div className="col-span-2 flex justify-center items-center">
+              <div className="col-span-2 flex justify-center items-end md:items-center ">
                 <div className="border border-gray-600 bg-gray-600 rounded-lg p-2 w-fit cursor-pointer">
-                  <p className="text-white text-xs">Add Category</p>
+                  <p className="text-white text-xs max-md:hidden">Add Category</p>
+                  <p className="text-white text-xs md:hidden"><Plus/></p>
                 </div>
               </div>
             </div>
@@ -98,7 +99,8 @@ const Category = ({ formik, filters }) => {
               </div>
               <div className="col-span-2 flex justify-center items-center">
                 <div className="border border-gray-600 bg-gray-600 rounded-lg p-2 w-fit cursor-pointer">
-                  <p className="text-white text-xs">Add Category</p>
+                  <p className="text-white text-xs max-md:hidden">Add Category</p>
+                  <p className="text-white text-xs md:hidden"><Plus/></p>
                 </div>
               </div>
             </div>
