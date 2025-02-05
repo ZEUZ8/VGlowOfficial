@@ -15,9 +15,8 @@ import {
   Trash2,
 } from "lucide-react";
 import axios from "axios";
-import toast,{ Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
-
 
 const fetchProducts = async () => {
   const { data } = await axios.get("/api/products");
@@ -25,26 +24,30 @@ const fetchProducts = async () => {
 };
 
 const page = () => {
-  const handleDelete = ()=>{
-    console.log('clicked the handel dlete button')
-    toast.success('Item Deleted')
-  }
+  const handleDelete = () => {
+    console.log("clicked the handel dlete button");
+    toast.success("Item Deleted");
+  };
 
-  const { data: products, isLoading, isError } = useQuery({
-    queryKey: ["products"],
-    queryFn: fetchProducts,
-  });
+  // const {
+  //   data: products,
+  //   isLoading,
+  //   isError,
+  // } = useQuery({
+  //   queryKey: ["products"],
+  //   queryFn: fetchProducts,
+  // });
 
-  if(isError){
-    console.log(isError,'the error')
-  }
+  // if (isError) {
+  //   console.log(isError, "the error");
+  // }
 
   const list = [34, 3453, 53, 35, 23, 5, 2353];
-  console.log(products,'the products')
   return (
     <div>
       <Toaster position="top-center" reverseOrder={false} />
       <div>
+        
         <div className="max-lg:hidden flex justify-between py-3  px-2 pr-3">
           <div className="flex justify-center items-center">
             <div>
@@ -81,7 +84,7 @@ const page = () => {
             </div>
 
             <div className="flex justify-center items-center border border-gray-700 text-gray-700 rounded-xl p-2 gap-1 cursor-pointer text-sm">
-              <p >Price Range</p>
+              <p>Price Range</p>
               <p>
                 <Settings2 className="w-4 h-4" />
               </p>
@@ -131,8 +134,11 @@ const page = () => {
           </div> */}
           <div class="relative overflow-x-auto h-[100vh]">
             <div>
-              {list.map((item,i) => (
-                <div key={i} class="max-lg:hidden relative overflow-x-auto  rounded-lg border  mb-2 ">
+              {list.map((item, i) => (
+                <div
+                  key={i}
+                  class="max-lg:hidden relative overflow-x-auto  rounded-lg border  mb-2 "
+                >
                   <div className="flex items-center justify-between gap-3  p-3 ">
                     <div className="flex items-center gap-3">
                       <div>
@@ -223,11 +229,12 @@ const page = () => {
                     </div>
 
                     <div className="flex justify-center items-center gap-2 cursor-pointer mr-4 ">
+                      <Link href='/admin/products/edit/45'>
                       <div className=" border rounded-md bg-gray-200  p-2">
                         <p>
                           <Pencil className="w-4 h-4 text-black" />
                         </p>
-                      </div>
+                      </div></Link>
                       <div className="border rounded-md bg-gray-200 p-2">
                         <p>
                           <Trash2 className="w-4 h-4 text-black" />
@@ -239,8 +246,11 @@ const page = () => {
               ))}
             </div>
             <div className="lg:hidden ">
-              {list.map((item,i) => (
-                <div key={i} class="relative overflow-x-auto shadow-md rounded-lg border  mb-2 max-[100vw]">
+              {list.map((item, i) => (
+                <div
+                  key={i}
+                  class="relative overflow-x-auto shadow-md rounded-lg border  mb-2 max-[100vw]"
+                >
                   <div className="grid gap-2 p-3 ">
                     <div>
                       <input type="checkbox" />
@@ -338,12 +348,17 @@ const page = () => {
                         <p className="text-gray-700 text-xs">3</p>
                       </div>
                       <div className="flex justify-center items-center gap-2 cursor-pointer">
-                        <div className=" border rounded-md bg-gray-200  p-2">
-                          <p>
-                            <Pencil className="w-4 h-4 text-black" />
-                          </p>
-                        </div>
-                        <div className="border rounded-md bg-gray-200 p-2 " onClick={handleDelete}>
+                        <Link href="/admin/products/add">
+                          <div className=" border rounded-md bg-gray-200  p-2">
+                            <p>
+                              <Pencil className="w-4 h-4 text-black" />
+                            </p>
+                          </div>
+                        </Link>
+                        <div
+                          className="border rounded-md bg-gray-200 p-2 "
+                          onClick={handleDelete}
+                        >
                           <p>
                             <Trash2 className="w-4 h-4 text-black" />
                           </p>

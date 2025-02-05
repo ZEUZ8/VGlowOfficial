@@ -1,8 +1,16 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Store, StickyNote, SquareCheckBig, CloudUpload } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const Navbar = ({ handleSubmit }) => {
+  const pathName = usePathname();
+  const [editStatus,setEditStatus] = useState(null)
+  
+  useEffect(()=>{
+    setEditStatus(pathName.includes("edit"))
+  },[])
+
   return (
     <div>
       <div className="flex justify-between py-3 ">
@@ -10,7 +18,9 @@ const Navbar = ({ handleSubmit }) => {
           <div>
             <Store className="mx-2 h-5 w-5" />
           </div>
-          <p className="md:text-center font-normal text-xs md:text-sm lg:text-base">Add New Product</p>
+          <p className="md:text-center font-normal text-xs md:text-sm lg:text-base">
+            {editStatus ? "Edit Product" :"Ad new Product" }
+          </p>
         </div>
         <div className="flex justify-center items-center gap-2">
           <div className="flex justify-center items-center border border-black rounded-xl p-2 px-2 sm:px-3 gap-1 cursor-pointer ">
