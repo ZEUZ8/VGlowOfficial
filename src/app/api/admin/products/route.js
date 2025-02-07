@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 export const GET = async(req,res) => {
     try {
         const response = await axios.get(`http://localhost:6001/list`)
-        console.log(response,'the list getting in single product functionlaity')
         if(response?.data?.msg === "getting successfull"){
           return NextResponse.json(
             { msg: response?.data?.msg, products:response?.data?.products},

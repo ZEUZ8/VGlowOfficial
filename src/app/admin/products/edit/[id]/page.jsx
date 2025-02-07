@@ -5,13 +5,20 @@ import { useFormik } from "formik";
 import toast, { Toaster } from "react-hot-toast";
 import { productValidation } from "@/validation/admin/product";
 import axios from "axios";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Navbar from "../../add/Navbar";
 import Category from "../../add/Category";
 import Pricing from "../../add/Pricing";
 import ImageUpload from "../../add/imageUpload";
 
+//when page loading getting the product for updation with the id from the path
+const fetchProduct = async (id) => {
+  const response = await axios.get(`/api/admin/products/get/${id}`);
+  return response;
+};
+
 const page = () => {
+  const productId = "679dc79f448265ffc7b98caa";
   const [sizes, setSizes] = useState([50, 60, 70, 45, 30, 15]);
 
   const filters = [
@@ -32,6 +39,23 @@ const page = () => {
     },
   ];
 
+
+  const {
+    data: product,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["product", productId], // Unique query key for caching
+    queryFn: () => fetchProduct(productId), // Fetch function
+    enabled: !!productId, // Only fetch if productId is available
+    onSuccess: (response) => {
+      console.log("consoling",response);
+    },
+  });
+
+  // console.log(product,'the data')
+
   const initialFilters = filters.reduce((acc, filter) => {
     Object.keys(filter).forEach((key) => {
       // If filter has multiple options, create an array for those options
@@ -40,37 +64,10 @@ const page = () => {
     return acc;
   }, {});
 
-  const { mutate } = useMutation({
-    mutationFn: async (values) => {
-      const response = await axios.post("/api/admin/products/add", values);
-      return response.data;
-    },
 
-    onSuccess: (data) => {
-      resetForm();
-      console.log(
-        data.msg,
-        data.status,
-        data,
-        " consoling al response in the console"
-      );
-      if (data?.msg === "Product created successfully") {
-        console.log(data?.msg);
-        toast.success("Product Added");
-      } else {
-        console.log("chumma", data?.msg);
-        toast.error(data?.msg);
-      }
-    },
-
-    onError: (error) => {
-      toast.error(error?.response?.data?.msg || "product adding failed");
-    },
-  });
-
-  const onSubmit = () => {
-    mutate(values);
-  };
+  const onSubmit = ()=>{
+    console.log('ghost the shooter')
+  }
 
   const formik = useFormik({
     initialValues: {
