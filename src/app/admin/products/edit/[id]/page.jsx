@@ -12,14 +12,11 @@ import Pricing from "../../add/Pricing";
 import ImageUpload from "../../add/imageUpload";
 
 //when page loading getting the product for updation with the id from the path
-const fetchProduct = async (id) => {
-  const response = await axios.get(`/api/admin/products/get/${id}`);
-  return response;
-};
 
 const page = () => {
   const productId = "679dc79f448265ffc7b98caa";
   const [sizes, setSizes] = useState([50, 60, 70, 45, 30, 15]);
+  const [product, setProduct] = useState({});
 
   const filters = [
     { time: ["Day", "Night", "Both"] },
@@ -39,35 +36,61 @@ const page = () => {
     },
   ];
 
-
-  const {
-    data: product,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["product", productId], // Unique query key for caching
-    queryFn: () => fetchProduct(productId), // Fetch function
-    enabled: !!productId, // Only fetch if productId is available
-    onSuccess: (response) => {
-      console.log("consoling",response);
-    },
-  });
-
-  // console.log(product,'the data')
-
   const initialFilters = filters.reduce((acc, filter) => {
     Object.keys(filter).forEach((key) => {
-      // If filter has multiple options, create an array for those options
-      acc[key] = ""; // Set default as empty string or array
+      acc[key] = product?.filters?.[key] ?? ""; // Set default as empty string or array
     });
     return acc;
   }, {});
 
+  useEffect(() => {
+    const getting = async () => {
+      try {
+        const response = await axios.get(
+          `/api/admin/products/get/${productId}`
+        );
+        if (response?.data?.msg === "found product") {
+          setProduct(response?.data?.product);
+        } else {
+          toast.error(response?.data?.msg);
+        }
+      } catch (error) {
+        console.log(error, "consoling err");
+        toast.error("something went wrong");
+      }
+    };
 
-  const onSubmit = ()=>{
-    console.log('ghost the shooter')
-  }
+    getting();
+  }, []);
+
+  // console.log(product,'the data')
+  const { mutate } = useMutation({
+    mutationFn: async (values) => {
+      const response = await axios.put("/api/admin/products/update",values);
+      console.log(response,'the respones')
+      return response.data;
+    },
+
+    onSuccess: (data) => {
+      resetForm();
+      console.log(data.msg,data.status,data,' consoling al response in the console')
+      if(data?.msg === "Product updated successfully"){
+        console.log(data?.msg)
+        toast.success("Product updated")
+      }else{
+        console.log('chumma',data?.msg)
+        toast.error(data?.msg)
+      }
+    },
+
+    onError: (error) => {
+      toast.error(error?.response?.data?.msg || "product updating failed");
+    },
+  });
+
+  const onSubmit = async() => {
+    mutate(values)
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -79,12 +102,29 @@ const page = () => {
       stock: "",
       discount: null,
       discountType: "",
-      sizes: productValidation.fields.sizes.default() ?? [],
-      filters: initialFilters ?? "",
+      sizes: [],
+      filters: "",
     },
     validationSchema: productValidation,
     onSubmit,
   });
+
+  useEffect(() => {
+    if (product) {
+      formik.setValues({
+        productName: product?.productName ?? "",
+        productDescription: product?.description ?? "",
+        mainCategory: product?.category ?? "",
+        subCategory: product?.subCategory ?? "",
+        basePricing: product?.basePricing ?? "",
+        stock: product?.stock ?? "",
+        discount: product?.discount ?? null,
+        discountType: product?.discountType ?? "",
+        sizes: product?.sizes ?? [],
+        filters: initialFilters,
+      });
+    }
+  }, [product]); // Th
 
   const {
     values,
@@ -98,9 +138,24 @@ const page = () => {
     setFieldValue,
   } = formik;
 
-  useEffect(() => {
-    console.log(errors, " consoling the errors");
-  }, [errors]);
+  // useEffect(() => {
+  //   console.log(values, " consoling in the ");
+  // }, [values]);
+
+  //comparing the two boject values and the product from the database to ensure there is a change by this way can remove unwanted updations
+  const hasChanges = (original, updated) => {
+    return Object.keys(updated).some((key) => {
+      if (Array.isArray(updated[key])) {
+        // Compare arrays (like sizes or filters)
+        return (
+          JSON.stringify(original[key] ?? []) !== JSON.stringify(updated[key])
+        );
+      } else {
+        // Compare primitive values
+        return (original[key] ?? "") !== (updated[key] ?? "");
+      }
+    });
+  };
 
   return (
     <div className="">

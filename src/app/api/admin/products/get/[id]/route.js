@@ -5,6 +5,7 @@ export const GET = async (req, { params }) => {
   try {
     const { id } = params;
     const response = await axios.get(`http://localhost:6001/list/${id}`);
+    console.log(response.data,'the response setting')
     if (response?.data?.msg === "found product") {
       return NextResponse.json(
         { msg: response?.data?.msg, product: response?.data?.existingProduct },
