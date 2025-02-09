@@ -7,6 +7,7 @@ export const PUT = async (req, res) => {
     const response = await axios.put("http://localhost:6001/update", {
       ...body,
     });
+    
     if (response?.data?.msg === "Product updated successfully") {
       return NextResponse.json(
         { msg: response?.data?.msg, product: response?.data?.product },
@@ -20,9 +21,9 @@ export const PUT = async (req, res) => {
       );
     }
   } catch (err) {
-    console.log(err);
+    console.log(err?.response?.data,'consoling the error');
     return NextResponse.json(
-      { msg: "Error at product updating" },
+      { msg: err?.response?.data?.msg ?? "Error at product updating" },
       { status: 500 }
     );
   }

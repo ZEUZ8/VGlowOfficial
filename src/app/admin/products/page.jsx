@@ -349,19 +349,23 @@ const page = () => {
                       </div>
                       <div className="flex justify-center items-center gap-2 cursor-pointer">
                         <Link href="/admin/products/add">
-                          <div className=" border rounded-md bg-gray-200  p-2">
+                          <div className=" border rounded-md bg-gray-200  p-2 flex justify-between items-center gap-3">
                             <p>
                               <Pencil className="w-4 h-4 text-black" />
                             </p>
+                            <p className="text-sm text-gray-600">Edit</p>
                           </div>
                         </Link>
                         <div
                           className="border rounded-md bg-gray-200 p-2 "
                           onClick={handleDelete}
                         >
+                          <div className="flex justify-between items-center gap-3">
                           <p>
                             <Trash2 className="w-4 h-4 text-black" />
                           </p>
+                          <p className="text-sm text-gray-600 font-light">Delete</p>
+                          </div>
                         </div>
                       </div>
                     </div>

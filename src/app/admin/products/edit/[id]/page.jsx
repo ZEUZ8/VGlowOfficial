@@ -66,7 +66,11 @@ const page = () => {
   // console.log(product,'the data')
   const { mutate } = useMutation({
     mutationFn: async (values) => {
-      const response = await axios.put("/api/admin/products/update",values);
+      const payload = {
+        ...values, // Spread existing form values
+        id: product._id // Add product ID dynamically
+      }
+      const response = await axios.put("/api/admin/products/update",payload);
       console.log(response,'the respones')
       return response.data;
     },
