@@ -8,6 +8,7 @@ import {
   IndianRupee,
   LayoutPanelTop,
   Pencil,
+  RotateCcw,
   Search,
   Settings2,
   ShoppingCart,
@@ -16,7 +17,7 @@ import {
 } from "lucide-react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const fetchProducts = async () => {
   const { data } = await axios.get("/api/products");
@@ -24,30 +25,46 @@ const fetchProducts = async () => {
 };
 
 const page = () => {
-  const handleDelete = () => {
-    console.log("clicked the handel dlete button");
-    toast.success("Item Deleted");
+  const list = [34, 3453, 53, 35, 23, 5, 2353];
+  const productId = "679dd05be5ee9ef1d2ffe0d5";
+  const queryclient = useQueryClient();
+
+  const softDelete = async (id) => {
+    const { data } = await axios.patch(`/api/admin/products/delete/${id}`);
+    return data;
   };
 
-  // const {
-  //   data: products,
-  //   isLoading,
-  //   isError,
-  // } = useQuery({
-  //   queryKey: ["products"],
-  //   queryFn: fetchProducts,
+  // use this in the fute muc more easier and faster right now just complete and later implent tis ************
+  // const mutation = useMutation({
+  //   mutationFn: (productId) => softDeleteProduct(productId),
+  //   onMutate: (deletedProductId) => {
+  //     queryClient.setQueryData(["products"], (oldProducts) =>
+  //       oldProducts.filter((product) => product.id !== deletedProductId)
+  //     );
+  //   },
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries(["products"]); // Fetch fresh data
+  //   },
   // });
 
-  // if (isError) {
-  //   console.log(isError, "the error");
-  // }
+  const { mutate } = useMutation({
+    mutationFn: (productId) => softDelete(productId),
+    onSuccess: (data) => {
+      if (data?.msg == "product disabled" || "product recovered") {
+        queryclient.invalidateQueries(["products"]);
+        toast.success(data?.msg);
+      }
+    },
+  });
 
-  const list = [34, 3453, 53, 35, 23, 5, 2353];
+  const handleDelete = () => {
+    mutate(productId);
+  };
+
   return (
     <div>
       <Toaster position="top-center" reverseOrder={false} />
       <div>
-        
         <div className="max-lg:hidden flex justify-between py-3  px-2 pr-3">
           <div className="flex justify-center items-center">
             <div>
@@ -229,16 +246,26 @@ const page = () => {
                     </div>
 
                     <div className="flex justify-center items-center gap-2 cursor-pointer mr-4 ">
-                      <Link href='/admin/products/edit/45'>
-                      <div className=" border rounded-md bg-gray-200  p-2">
-                        <p>
-                          <Pencil className="w-4 h-4 text-black" />
-                        </p>
-                      </div></Link>
-                      <div className="border rounded-md bg-gray-200 p-2">
-                        <p>
-                          <Trash2 className="w-4 h-4 text-black" />
-                        </p>
+                      <Link href="/admin/products/edit/45">
+                        <div className=" border rounded-md bg-gray-200  p-2">
+                          <p>
+                            <Pencil className="w-4 h-4 text-black" />
+                          </p>
+                        </div>
+                      </Link>
+                      <div
+                        className="border rounded-md bg-gray-200 p-2"
+                        onClick={handleDelete}
+                      >
+                        {i === 1 || i === 4  ? (
+                          <p>
+                            <RotateCcw className="w-4 h-4 text-black" />
+                          </p>
+                        ) : (
+                          <p>
+                            <Trash2 className="w-4 h-4 text-black" />
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -357,14 +384,22 @@ const page = () => {
                           </div>
                         </Link>
                         <div
-                          className="border rounded-md bg-gray-200 p-2 "
+                          className="border rounded-md p-2 bg-gray-200"
                           onClick={handleDelete}
                         >
                           <div className="flex justify-between items-center gap-3">
-                          <p>
-                            <Trash2 className="w-4 h-4 text-black" />
-                          </p>
-                          <p className="text-sm text-gray-600 font-light">Delete</p>
+                            {i == 1 || i == 4   ? (
+                              <p>
+                                <RotateCcw className="w-4 h-4 text-black" />
+                              </p>
+                            ) : (
+                              <p>
+                                <Trash2 className="w-4 h-4 text-black" />
+                              </p>
+                            )}
+                            <p className="text-sm text-black font-light">
+                              Delete
+                            </p>
                           </div>
                         </div>
                       </div>
