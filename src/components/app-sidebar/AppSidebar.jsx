@@ -32,6 +32,8 @@ import {
 } from "@/components/ui/collapsible";
 
 import Toggle from "../toggle/Toggle";
+import { useEffect, useState } from "react";
+import { subMenuState } from "@/util/localStorage/subMenu";
 
 // Menu items.
 const items = [
@@ -48,19 +50,22 @@ const items = [
       { title: "Analytics", url: "/admin/products/report" },
       { title: "Products", url: "/admin/products" },
       { title: "Add Products", url: "/admin/products/add" },
-
     ],
   },
   {
     title: "Category",
     url: "#",
     icon: ChartColumnStacked,
+    submenu: [
+      { title: "Categories", url: "/admin/category" },
+      { title: "Add Category", url: "/admin/category/add" },
+    ],
   },
   {
     title: "Search",
     url: "#",
     icon: Search,
-    submenu: [],
+    // submenu: [],
   },
   {
     title: "Settings",
@@ -75,6 +80,19 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const [openMenu, setOpenMenu] = useState("");
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setOpenMenu(localStorage.getItem("openMenu") || "");
+    setIsClient(true);
+  }, []);
+
+  const handleMnenuClick = (title) => {
+    const newOpenMenu = openMenu === title ? "" : title;
+    setOpenMenu(newOpenMenu);
+    localStorage.setItem("openMenu", newOpenMenu);
+  };
   return (
     <div className="">
       <Sidebar>
@@ -95,11 +113,14 @@ export function AppSidebar() {
                   <SidebarMenuItem key={index}>
                     {item.submenu ? (
                       <Collapsible
-                        defaultOpen={item.title === "Products"}
+                        open={isClient && openMenu === item.title}
                         className="group/collapsible"
                       >
                         <CollapsibleTrigger asChild>
-                          <div className="flex justify-between items-center">
+                          <div
+                            className="flex justify-between items-center"
+                            onClick={() => handleMnenuClick(item.title)}
+                          >
                             <SidebarMenuButton>
                               <div className="grid grid-cols-2 justify-between items-center cursor-pointer">
                                 <div className="flex items-center">
@@ -112,7 +133,13 @@ export function AppSidebar() {
                                 </span>
                               </div>
                             </SidebarMenuButton>
-                            <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180 h-5 w-4 font-bold text-gray-500" />
+                            <ChevronDown
+                              className={`ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180 h-5 w-4 font-bold text-gray-500 ${
+                                isClient && openMenu === item.title
+                                  ? "rotate-180"
+                                  : ""
+                              }`}
+                            />
                           </div>
                         </CollapsibleTrigger>
                         <CollapsibleContent>
