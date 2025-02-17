@@ -17,11 +17,11 @@ export default function ListTable() {
 
   return (
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-2">
-      <div class="pb-4 bg-white dark:bg-gray-900">
+      <div class="lg:pb-4  dark:bg-gray-900 ">
         <label for="table-search" class="sr-only">
           Search
         </label>
-        <div class="relative mt-1">
+        <div class="relative mt-1 ">
           <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg
               class="w-4 h-4 text-gray-500 dark:text-gray-400"

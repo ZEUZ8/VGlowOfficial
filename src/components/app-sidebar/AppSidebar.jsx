@@ -58,7 +58,7 @@ const items = [
     icon: ChartColumnStacked,
     submenu: [
       { title: "Categories", url: "/admin/category" },
-      { title: "Add Category", url: "/admin/category/add" },
+      { title: "Sub Category", url: "/admin/category/subcategory" },
     ],
   },
   {
