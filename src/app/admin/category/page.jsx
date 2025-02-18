@@ -3,12 +3,56 @@ import ListTable from "@/components/admin/category/ListTable";
 import React, { useEffect, useState } from "react";
 import Toggle from "./toggleButton/toggle";
 import Button from "./submitButton/Button";
+import { useFormik } from "formik";
+import { categoryValidation } from "@/validation/admin/category";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 const page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const onSubmit = async () => {
+    try {
+      //making the api for creating the category
+      const response = await axios.post("/api/admin/category/add", values);
+      if (response.status == 201) {
+        toast.success("Category added successfully!");
+        setIsModalOpen(false);
+        formik.resetForm();
+      } else {
+        toast.error(response?.data.msg);
+      }
+    } catch (error) {
+      toast.error("Something went wrong!");
+    }
+  };
+
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleSubmit,
+    handleBlur,
+    handleReset,
+    resetForm,
+  } = useFormik({
+    initialValues: {
+      categoryName: "",
+      description: "",
+      isActive: true,
+    },
+    validationSchema: categoryValidation.omit(["parent"]),
+    onSubmit,
+  });
+
+  useEffect(() => {
+    console.log("consling the errors", errors);
+  }, [errors]);
+
   return (
     <div className="flex flex-col min-h-screen">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className=" py-2 p-1">
         <div className="lg:px-2 flex justify-between lg:justify-end items-center gap-2 ">
           <div className="p-2 border border-gray-300 rounded-lg cursor-pointer focus:scale-95 bg-gray-100">
@@ -82,9 +126,18 @@ const page = () => {
               </p>
               <input
                 type="text"
+                name="categoryName"
+                value={values.categoryName}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 className="border rounded-lg bg-gray-100 p-2 text-sm w-full"
                 placeholder="Category name"
               />
+              {touched.categoryName && errors.categoryName && (
+                <p className="text-xs text-red-500 pt-2">
+                  {errors.categoryName}
+                </p>
+              )}
             </div>
             <div className="py-2">
               <p className="text-sm font-normal text-gray-800 p-1">
@@ -93,15 +146,76 @@ const page = () => {
               </p>
               <input
                 type="text"
+                name="description"
+                value={values.description}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 className="border rounded-lg bg-gray-100 p-2 text-sm w-full"
                 placeholder="Category Description"
               />
+              {touched.description && errors.description && (
+                <p className="text-xs text-red-500 pt-2">
+                  {errors.description}
+                </p>
+              )}
             </div>
             <div className="py-3">
               <p className="text-sm font-normal text-gray-800 p-1">
                 Category Status
               </p>
-              <Toggle />
+              <div>
+                <div className="toggler">
+                  <input
+                    id="toggler-1"
+                    name="isActive"
+                    type="checkbox"
+                    checked={values.isActive}
+                    onChange={() => {
+                      handleChange({
+                        target: {
+                          name: "isActive",
+                          values: !values.isActive,
+                        },
+                      });
+                    }}
+                    onBlur={handleBlur}
+                  />
+                  <label htmlFor="toggler-1">
+                    <svg
+                      className="toggler-on"
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 130.2 130.2"
+                    >
+                      <polyline
+                        className="path check"
+                        points="100.2,40.2 51.5,88.8 29.8,67.5"
+                      ></polyline>
+                    </svg>
+                    <svg
+                      className="toggler-off"
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 130.2 130.2"
+                    >
+                      <line
+                        className="path line"
+                        x1="34.4"
+                        y1="34.4"
+                        x2="95.8"
+                        y2="95.8"
+                      ></line>
+                      <line
+                        className="path line"
+                        x1="95.8"
+                        y1="34.4"
+                        x2="34.4"
+                        y2="95.8"
+                      ></line>
+                    </svg>
+                  </label>
+                </div>
+              </div>
             </div>
             <div className="flex justify-end gap-2 mt-4">
               <button
@@ -110,7 +224,11 @@ const page = () => {
               >
                 Cancel
               </button>
-              <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg shadow-sm hover:scale-105">
+              <button
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg shadow-sm hover:scale-105"
+                type="submit"
+                onClick={handleSubmit}
+              >
                 Add Category
               </button>
             </div>

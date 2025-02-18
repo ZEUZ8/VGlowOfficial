@@ -2,17 +2,42 @@
 import ListTable from "@/components/admin/category/ListTable";
 import React, { useEffect, useState } from "react";
 import Toggle from "../toggleButton/Toggle";
+import { ChevronDown, CircleX } from "lucide-react";
+import { useFormik } from "formik";
+import { categoryValidation } from "@/validation/admin/category";
 
 const page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubCategoryOpen, setIsSubCategoryOpen] = useState(false);
+  const [parent, setParent] = useState("");
+
+  const [category, setCategory] = useState([
+    "Skin Care",
+    "Hair Care",
+    "Body Care",
+    "Nails",
+  ]);
+
+  const onSubmit = () => {
+    console.log("consoling in the onSubmit function");
+  };
+  const { values } = useFormik({
+    initialValues: {
+      name: "",
+      description: "",
+      parentId: "",
+      isActive: "",
+    },
+    validationSchema:categoryValidation,
+    onSubmit,
+  });
 
   return (
     <div className="flex flex-col min-h-screen">
       <div className="p-2 grid lg:grid-cols-6">
         <div className=" lg:hidden flex justify-end items-center py-4">
           <div className="lg:px-2  ">
-            <div className="p-2 py-3 border border-gray-300 rounded-lg cursor-pointer focus:scale-95 bg-gray-100">
+            <div className="p-1 py-2 border border-gray-300 rounded-lg cursor-pointer focus:scale-95 bg-gray-100">
               <p
                 className="text-sm text-gray-700 px-2"
                 onClick={() => setIsSubCategoryOpen(true)}
@@ -23,7 +48,7 @@ const page = () => {
           </div>
         </div>
         <div className="lg:col-span-5">
-          <form className="">
+          {/* <form className="">
             <label
               for="default-search"
               className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -62,7 +87,30 @@ const page = () => {
                 Search
               </button>
             </div>
-          </form>
+          </form> */}
+
+          <div className="">
+            <div className="relative">
+              <select
+                className="py-3 px-4 border border-gray-300 rounded-lg cursor-pointer bg-gray-100 w-full text-gray-700 appearance-none"
+                value={parent}
+                onChange={(e) => setParent(e.target.value)}
+              >
+                {category.map((item) => (
+                  <option value={item}>{item}</option>
+                ))}
+              </select>
+              {parent ? (
+                <div className="absolute inset-y-0 right-2  flex items-center pointer-events-none" onClick={()=>setParent('')}>
+                  <CircleX className="text-gray-600 w-5 h-5 " />
+                </div>
+              ) : (
+                <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none" >
+                  <ChevronDown className="text-gray-600 w-5 h-5" />
+                </div>
+              )}
+            </div>
+          </div>
         </div>
         <div className=" max-lg:hidden lg:col-span-1  flex justify-start lg:justify-center items-center max-lg:mt-3">
           <div className="lg:px-2  ">
@@ -78,7 +126,17 @@ const page = () => {
         </div>
       </div>
       <div className="px-1 flex-grow ">
-        <ListTable />
+        {!parent ? (
+          <>
+            <div className="py-2 px-3">
+              <div className="border p-4 border-dashed border-red-500 rounded-lg flex justify-start items-center">
+                <p className="text-red-400 text-sm">Select a Category</p>
+              </div>
+            </div>
+          </>
+        ) : (
+          <ListTable />
+        )}
       </div>
 
       {isSubCategoryOpen && (

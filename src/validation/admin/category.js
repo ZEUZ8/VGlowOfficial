@@ -1,15 +1,15 @@
 import * as yup from 'yup'
 
 export const categoryValidation = yup.object().shape({
-    name: yup
+    categoryName: yup
         .string()
         .required('Category Name Required'),
-    Description: yup
+    description: yup
         .string(),
     parent:yup
         .string()
-        .required("Parent Required "),
+        .required("Parent Required"),
     isActice: yup
         .boolean()
-        .required("Category Status")
+        .default(true)
 })
