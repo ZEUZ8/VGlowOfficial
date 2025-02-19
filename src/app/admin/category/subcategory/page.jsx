@@ -2,35 +2,79 @@
 import ListTable from "@/components/admin/category/ListTable";
 import React, { useEffect, useState } from "react";
 import Toggle from "../toggleButton/Toggle";
-import { ChevronDown, CircleX } from "lucide-react";
+import { ChevronDown, CircleX, CloudLightning } from "lucide-react";
 import { useFormik } from "formik";
 import { categoryValidation } from "@/validation/admin/category";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import toast, { Toaster } from "react-hot-toast";
+
+const fetchCategories = async () => {
+  const { data } = await axios.get("/api/admin/category");
+  return data;
+};
 
 const page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubCategoryOpen, setIsSubCategoryOpen] = useState(false);
   const [parent, setParent] = useState("");
+  const [categoryList, setCategoryList] = useState([]);
+  const [subCategoryList, setSubCategoryList] = useState([]);
 
-  const [category, setCategory] = useState([
-    "Skin Care",
-    "Hair Care",
-    "Body Care",
-    "Nails",
-  ]);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["categories"],
+    queryFn: fetchCategories,
+    onSuccess: (data) => {
+      console.log(data.msg, "consoling the data");
+    },
+  });
+
+  useEffect(() => {
+    setCategoryList (data?.category ?? []);
+  }, [data]);
+
+
+  useEffect(() => {
+    async function getting(params) {
+      try {
+        const parentData = category.find(
+          (item) => item.categoryName === parent
+        );
+        if (parentData) {
+          const id = parentData?._id;
+          const response = await axios.get(`/api/admin/subCategory/get/${id}`);
+          console.log(response, "the repsonse consling int frontend");
+          if (response.data === "getting successfull") {
+            setSubCategoryList(response?.data?.subCategory);
+          }
+        } else {
+          toast.error("Parent Category not found");
+        }
+      } catch (err) {
+        console.log(err, "consoling the erro");
+      }
+    }
+    getting();
+  }, [parent]);
 
   const onSubmit = () => {
     console.log("consoling in the onSubmit function");
   };
+
   const { values } = useFormik({
     initialValues: {
-      name: "",
+      categoryName: "",
       description: "",
       parentId: "",
       isActive: "",
     },
-    validationSchema:categoryValidation,
+    validationSchema: categoryValidation,
     onSubmit,
   });
+
+  if (isLoading) {
+    return <div className="grid justify-center items-center ">Loading</div>;
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -96,16 +140,28 @@ const page = () => {
                 value={parent}
                 onChange={(e) => setParent(e.target.value)}
               >
-                {category.map((item) => (
-                  <option value={item}>{item}</option>
+                <option
+                  value=""
+                  disabled={true}
+                  className="peer-disabled:text-gray-700 peer-disabled:opacity-100"
+                >
+                  Select Parent Category
+                </option>
+                {categoryList.map((item, i) => (
+                  <option key={i} value={item.categoryName}>
+                    {item.categoryName}
+                  </option>
                 ))}
               </select>
               {parent ? (
-                <div className="absolute inset-y-0 right-2  flex items-center pointer-events-none" onClick={()=>setParent('')}>
+                <div
+                  className="absolute inset-y-0 right-2  flex items-center pointer-events-none"
+                  onClick={() => setParent("")}
+                >
                   <CircleX className="text-gray-600 w-5 h-5 " />
                 </div>
               ) : (
-                <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none" >
+                <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
                   <ChevronDown className="text-gray-600 w-5 h-5" />
                 </div>
               )}
@@ -128,14 +184,32 @@ const page = () => {
       <div className="px-1 flex-grow ">
         {!parent ? (
           <>
-            <div className="py-2 px-3">
+            <div className="py-2 px-2">
               <div className="border p-4 border-dashed border-red-500 rounded-lg flex justify-start items-center">
                 <p className="text-red-400 text-sm">Select a Category</p>
               </div>
             </div>
           </>
-        ) : (
+        ) : subCategoryList.length > 0 ? (
           <ListTable />
+        ) : (
+          <div className="py-2 px-3">
+            <div className="border p-4 border-dashed border-red-500 rounded-lg flex justify-start items-center">
+              <div>
+                <p className="text-red-400 text-sm">Empty Sub Category</p>
+              </div>
+              <div className="px-3">
+                <div className="p-2 py-3 border border-gray-300 rounded-lg cursor-pointer focus:scale-95 bg-gray-100">
+                  <p
+                    className="text-sm text-gray-700 px-2"
+                    onClick={() => setIsSubCategoryOpen(true)}
+                  >
+                    Add SubCategory
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
       </div>
 

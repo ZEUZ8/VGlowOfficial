@@ -13,7 +13,7 @@ export const POST = async (req, res) => {
     ) {
       return NextResponse.json(
         { msg: response?.data?.msg, category: response?.data?.category },
-        { status: 409 }
+        { status: response?.status}
       );
     } else {
       const errorMessage = response?.data?.msg ?? "please try again";
