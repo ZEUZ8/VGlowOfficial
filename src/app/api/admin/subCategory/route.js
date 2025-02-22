@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
 
-export const GET = async (req,{params}) => {
-    console.log(params,'the parras mconsling')
+export const GET = async (req, { params }) => {
+  console.log(params, "the parras mconsling");
   try {
     const response = await axios.get(`http://localhost:6001/admin/subCategory`);
-    console.log(response.data, " consling the rcategor ");
     if (
       response?.data?.msg === "getting successfull" ||
       response.status === 201

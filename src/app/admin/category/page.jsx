@@ -42,7 +42,7 @@ const page = () => {
       description: "",
       isActive: true,
     },
-    validationSchema: categoryValidation.omit(["parent"]),
+    validationSchema: categoryValidation.omit(["parentId"]),
     onSubmit,
   });
 
@@ -174,7 +174,7 @@ const page = () => {
                       handleChange({
                         target: {
                           name: "isActive",
-                          values: !values.isActive,
+                          value: !values.isActive,
                         },
                       });
                     }}

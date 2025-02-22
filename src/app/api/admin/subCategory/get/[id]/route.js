@@ -6,9 +6,10 @@ export const GET = async (req, { params }) => {
     const { id } = params;
     console.log(id)
     const response = await axios.get(`http://localhost:6001/admin/subCategory/${id}`);
-    if (response?.data?.msg === "found product") {
+    console.log('consoling the value in the consle9999')
+    if (response?.data?.msg === "getting successfull") {
       return NextResponse.json(
-        { msg: response?.data?.msg, product: response?.data?.existingProduct },
+        { msg: response?.data?.msg, subCategory: response?.data?.subCategory },
         { status: 201 }
       );
     } else {

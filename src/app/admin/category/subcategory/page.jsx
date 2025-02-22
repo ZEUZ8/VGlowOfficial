@@ -6,14 +6,13 @@ import { ChevronDown, CircleX, CloudLightning } from "lucide-react";
 import { useFormik } from "formik";
 import { categoryValidation } from "@/validation/admin/category";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import toast, { Toaster } from "react-hot-toast";
 
 const fetchCategories = async () => {
-  const { data } = await axios.get("/api/admin/category");
-  return data;
+  const response = await axios.get("/api/admin/category");
+  return response?.data;
 };
-
 const page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubCategoryOpen, setIsSubCategoryOpen] = useState(false);
@@ -24,31 +23,34 @@ const page = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["categories"],
     queryFn: fetchCategories,
-    onSuccess: (data) => {
-      console.log(data.msg, "consoling the data");
-    },
+    // onSuccess: (data) => {
+    //   if (data?.category) {
+    //     console.log("conslig the data only if data exists");
+    //   }
+    // },
   });
 
   useEffect(() => {
-    setCategoryList (data?.category ?? []);
+    if (data?.category) {
+      setCategoryList([...data.category]); // Ensures immutability
+    }
   }, [data]);
-
 
   useEffect(() => {
     async function getting(params) {
       try {
-        const parentData = category.find(
+        const parentData = categoryList.find(
           (item) => item.categoryName === parent
         );
         if (parentData) {
           const id = parentData?._id;
           const response = await axios.get(`/api/admin/subCategory/get/${id}`);
           console.log(response, "the repsonse consling int frontend");
-          if (response.data === "getting successfull") {
+          if (response?.data?.msg === "getting successfull") {
             setSubCategoryList(response?.data?.subCategory);
           }
         } else {
-          toast.error("Parent Category not found");
+          toast.error("Not Found SubCategory");
         }
       } catch (err) {
         console.log(err, "consoling the erro");
@@ -57,23 +59,60 @@ const page = () => {
     getting();
   }, [parent]);
 
+  const { mutate } = useMutation({
+    mutationFn: async (values) => {
+      const response = await axios.post("/api/admin/subCategory/add", values);
+      return response?.data;
+    },
+
+    onSuccess: (data) => {
+      console.log(data, "data in the consle");
+      if (data.msg === "subCategory added") {
+        toast.success("subCategory Added");
+        setSubCategoryList(data?.subCategory);
+      } else {
+        toast.error(data?.msg ?? "Somehting went wrong");
+      }
+    },
+
+    onError: (error) => {
+      toast.error(error?.response?.data?.msg || "product adding failed");
+    },
+  });
+
   const onSubmit = () => {
-    console.log("consoling in the onSubmit function");
+    mutate(values);
   };
 
-  const { values } = useFormik({
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    handleReset,
+    setFieldValue,
+  } = useFormik({
     initialValues: {
       categoryName: "",
       description: "",
       parentId: "",
-      isActive: "",
+      isActive: true,
     },
     validationSchema: categoryValidation,
     onSubmit,
   });
+  useEffect(() => {
+    console.log(values, " consoling values for checking ");
+  }, [values]);
 
   if (isLoading) {
-    return <div className="grid justify-center items-center ">Loading</div>;
+    return (
+      <div className="grid justify-center items-center ">
+        <p className="text-gray-700">Loading categories...</p>
+      </div>
+    );
   }
 
   return (
@@ -84,7 +123,7 @@ const page = () => {
             <div className="p-1 py-2 border border-gray-300 rounded-lg cursor-pointer focus:scale-95 bg-gray-100">
               <p
                 className="text-sm text-gray-700 px-2"
-                onClick={() => setIsSubCategoryOpen(true)}
+                onClick={() => parent && setIsSubCategoryOpen(true)}
               >
                 Add SubCategory
               </p>
@@ -138,7 +177,13 @@ const page = () => {
               <select
                 className="py-3 px-4 border border-gray-300 rounded-lg cursor-pointer bg-gray-100 w-full text-gray-700 appearance-none"
                 value={parent}
-                onChange={(e) => setParent(e.target.value)}
+                onChange={(e) => {
+                  setParent(e.target.value);
+                  const parent = categoryList.find((item) => {
+                    return item?.categoryName === e.target.value;
+                  });
+                  setFieldValue("parentId", parent?._id);
+                }}
               >
                 <option
                   value=""
@@ -173,7 +218,7 @@ const page = () => {
             <div className="p-2 py-3 border border-gray-300 rounded-lg cursor-pointer focus:scale-95 bg-gray-100">
               <p
                 className="text-sm text-gray-700 px-2"
-                onClick={() => setIsSubCategoryOpen(true)}
+                onClick={() => parent && setIsSubCategoryOpen(true)}
               >
                 Add SubCategory
               </p>
@@ -190,19 +235,19 @@ const page = () => {
               </div>
             </div>
           </>
-        ) : subCategoryList.length > 0 ? (
-          <ListTable />
+        ) : subCategoryList?.length > 0 ? (
+          <ListTable subCategoryList={subCategoryList} />
         ) : (
           <div className="py-2 px-3">
             <div className="border p-4 border-dashed border-red-500 rounded-lg flex justify-start items-center">
               <div>
-                <p className="text-red-400 text-sm">Empty Sub Category</p>
+                <p className="text-red-400 text-sm">Empty Sub Category </p>
               </div>
               <div className="px-3">
                 <div className="p-2 py-3 border border-gray-300 rounded-lg cursor-pointer focus:scale-95 bg-gray-100">
                   <p
                     className="text-sm text-gray-700 px-2"
-                    onClick={() => setIsSubCategoryOpen(true)}
+                    onClick={() => parent && setIsSubCategoryOpen(true)}
                   >
                     Add SubCategory
                   </p>
@@ -226,8 +271,17 @@ const page = () => {
               <input
                 type="text"
                 className="border rounded-lg bg-gray-100 p-2 text-sm w-full"
-                placeholder="Category name"
+                placeholder="Sub Category name"
+                name="categoryName"
+                value={values.categoryName}
+                onBlur={handleBlur}
+                onChange={handleChange}
               />
+              {touched.categoryName && errors.categoryName && (
+                <p className="text-xs text-red-500 pt-2">
+                  {errors.categoryName}
+                </p>
+              )}
             </div>
             <div className="py-2">
               <p className="text-sm font-normal text-gray-800 p-1">
@@ -237,24 +291,108 @@ const page = () => {
               <input
                 type="text"
                 className="border rounded-lg bg-gray-100 p-2 text-sm w-full"
+                name="description"
                 placeholder="Sub Category Description"
+                value={values.description}
+                onBlur={handleBlur}
+                onChange={handleChange}
               />
+              {touched.description && errors.description && (
+                <p className="text-xs text-red-500 pt-2">
+                  {errors.description}
+                </p>
+              )}
             </div>
-            <div className="py-2">
+
+            {/* <div className="py-2">
               <p className="text-sm font-normal text-gray-800 p-1">
                 Parent Category
               </p>
-              <input
-                type="text"
-                className="border rounded-lg bg-gray-100 p-2 text-sm w-full"
-                placeholder="Parent Category Name "
-              />
-            </div>
+              <div className="grid grid-cols-10 gap-2 justify-center items-center">
+              <div className="col-span-8">
+                <input
+                  type="text"
+                  className="border rounded-lg bg-gray-100 p-2 text-sm w-full"
+                  name="parentId"
+                  placeholder="Parent Category Name "
+                  value={values.parentId}
+                  onChange={handleChange}
+                  onBlur={(e) => {
+                    const parent = categoryList.find((item) => {
+                      return item?.categoryName === e.target.value;
+                    });
+                    setFieldValue("parentId", parent?._id ?? "");
+                  }}
+                />
+              </div>
+              <div className="col-span-2 ">
+                  <button className="border p-2 h-full bg-blue-50 rounded-lg text-sm font-medium ">
+                    Search
+                  </button>
+                </div>
+              </div>
+              {touched.parentId && errors.parentId && (
+                <p className="text-xs text-red-500 pt-2">{errors.parentId}</p>
+              )}
+            </div> */}
+
             <div className="py-3">
               <p className="text-sm font-normal text-gray-800 p-1">
-                Sub Category Status
+                Category Status
               </p>
-              <Toggle />
+              <div>
+                <div className="toggler">
+                  <input
+                    id="toggler-1"
+                    name="isActive"
+                    type="checkbox"
+                    checked={values.isActive}
+                    onChange={() => {
+                      handleChange({
+                        target: {
+                          name: "isActive",
+                          value: !values.isActive,
+                        },
+                      });
+                    }}
+                    onBlur={handleBlur}
+                  />
+                  <label htmlFor="toggler-1">
+                    <svg
+                      className="toggler-on"
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 130.2 130.2"
+                    >
+                      <polyline
+                        className="path check"
+                        points="100.2,40.2 51.5,88.8 29.8,67.5"
+                      ></polyline>
+                    </svg>
+                    <svg
+                      className="toggler-off"
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 130.2 130.2"
+                    >
+                      <line
+                        className="path line"
+                        x1="34.4"
+                        y1="34.4"
+                        x2="95.8"
+                        y2="95.8"
+                      ></line>
+                      <line
+                        className="path line"
+                        x1="95.8"
+                        y1="34.4"
+                        x2="34.4"
+                        y2="95.8"
+                      ></line>
+                    </svg>
+                  </label>
+                </div>
+              </div>
             </div>
             <div className="flex justify-end gap-2 mt-4">
               <button
@@ -263,7 +401,11 @@ const page = () => {
               >
                 Cancel
               </button>
-              <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg shadow-sm hover:scale-105">
+              <button
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg shadow-sm hover:scale-105"
+                type="submit"
+                onClick={handleSubmit}
+              >
                 Add Sub Category
               </button>
             </div>

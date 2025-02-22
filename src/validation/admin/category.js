@@ -6,7 +6,7 @@ export const categoryValidation = yup.object().shape({
         .required('Category Name Required'),
     description: yup
         .string(),
-    parent:yup
+    parentId:yup
         .string()
         .required("Parent Required"),
     isActice: yup
