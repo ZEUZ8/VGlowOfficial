@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
 
-export const GET = async (req, res) => {
+export const DELETE = async (req,{params}) => {
   try {
-    const response = await axios.get(`http://localhost:6002/admin/category`);
+    const { id } = params;
+    const response = await axios.delete(`http://localhost:6002/admin/category/${id}`);
     if (
       response?.data?.msg === "getting successfull" ||
       response.status === 201

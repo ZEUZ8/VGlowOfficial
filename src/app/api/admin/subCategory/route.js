@@ -4,7 +4,7 @@ import axios from "axios";
 export const GET = async (req, { params }) => {
   console.log(params, "the parras mconsling");
   try {
-    const response = await axios.get(`http://localhost:6001/admin/subCategory`);
+    const response = await axios.get(`http://localhost:6002/admin/subCategory`);
     if (
       response?.data?.msg === "getting successfull" ||
       response.status === 201

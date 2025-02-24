@@ -1,25 +1,30 @@
 "use client";
 import { Trash2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import toast from "react-hot-toast";
+import DeleteModal from "../deleteModal/DeleteModal";
 
-export default function ListTable({ subCategoryList }) {
+export default function ListTable({ categoryList }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("Last 30 days");
-  useEffect(() => {
-    subCategoryList.map((item) => {
-      console.log(item.isActive, " consling in the loop");
+
+  const pathName = usePathname();
+
+  const section = useMemo(() => {
+    return pathName.includes("subcategory") ? "subCategory" : "category";
+  }, [pathName]);
+
+  const handleDelete = async (item) => {
+    const api = `/api/admin/${section}/delete/${item._id}`;
+    toast.remove("delete-toast");
+    toast.custom((t) => <DeleteModal t={t} api={api} />, {
+      id: "delete-toast",
     });
-  }, [subCategoryList]);
-
-  const filters = [
-    "Last day",
-    "Last 7 days",
-    "Last 30 days",
-    "Last month",
-    "Last year",
-  ];
-
-  const names = ["Apple MacBook Pro 17"];
+  };
+  const handleEdit = (item) => {
+    console.log("consling the edit", item);
+  };
 
   return (
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-2">
@@ -74,7 +79,7 @@ export default function ListTable({ subCategoryList }) {
             <th scope="col" class="px-6 py-3">
               Status
             </th>
-            {subCategoryList?.subCategory && (
+            {categoryList?.subCategory && (
               <th scope="col" class="px-6 py-3">
                 Sub Category
               </th>
@@ -85,11 +90,13 @@ export default function ListTable({ subCategoryList }) {
           </tr>
         </thead>
         <tbody>
-          {subCategoryList?.length > 0 &&
-            subCategoryList.map((item, index) => (
+          {categoryList?.length > 0 &&
+            categoryList.map((item, index) => (
               <tr
                 key={index}
-                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
+                class={` bg-white ${
+                  categoryList.length > 1 && "border-b"
+                } dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600`}
               >
                 <td class="w-4 p-4">
                   <div class="flex items-center">
@@ -110,24 +117,35 @@ export default function ListTable({ subCategoryList }) {
                   {item?.categoryName}
                 </th>
                 {/* <td class="px-6 py-4">sinan</td> */}
-                {subCategoryList.subCategory && (
-                  <td class="px-6 py-4">{item?.isActive}</td>
-                )}
-                <td class="px-6 py-4">{item?.isActive}</td>
                 <td class="px-6 py-4">
-                  <div className="flex justify-start items-center gap-2">
-                    <a
-                      href="#"
-                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  {item.isActive ? (
+                    <div>
+                      <p className="border px-3 py-1 rounded-full w-fit border-green-400 text-green-500 font-medium">
+                        Active
+                      </p>
+                    </div>
+                  ) : (
+                    <div>
+                      <p className="border px-3 py-1 rounded-full w-fit border-red-400 text-red-500 font-medium">
+                        Inactive
+                      </p>
+                    </div>
+                  )}
+                </td>
+                <td class="px-6 py-4">
+                  <div className="flex justify-start items-center gap-3">
+                    <p
+                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
+                      onClick={() => handleEdit(item)}
                     >
                       Edit
-                    </a>
-                    <a
-                      href="#"
-                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    </p>
+                    <p
+                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
+                      onClick={() => handleDelete(item)}
                     >
                       <Trash2 className="h-4 w-4 " />
-                    </a>
+                    </p>
                   </div>
                 </td>
               </tr>

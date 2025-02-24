@@ -1,28 +1,55 @@
 "use client";
 import ListTable from "@/components/admin/category/ListTable";
 import React, { useEffect, useState } from "react";
-import Toggle from "./toggleButton/toggle";
 import Button from "./submitButton/Button";
 import { useFormik } from "formik";
 import { categoryValidation } from "@/validation/admin/category";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
+import Toggler from "./toggler";
+
+const fetchCategories = async () => {
+  const response = await axios.get("/api/admin/category");
+  return response?.data;
+};
+
+const addCategory = async () => {
+  const response = await axios.post("/api/admin/category");
+  return response.data;
+};
 
 const page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [categoryList, setCategoryList] = useState([]);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["categories"],
+    queryFn: fetchCategories,
+  });
+
+  useEffect(() => {
+    console.log(data, " consokling teh state in teh console");
+    if (data?.category) {
+      setCategoryList([...data.category]); // Ensures immutability
+    }
+  }, [data]);
 
   const onSubmit = async () => {
     try {
       //making the api for creating the category
       const response = await axios.post("/api/admin/category/add", values);
+      console.log(response.data);
       if (response.status == 201) {
         toast.success("Category added successfully!");
         setIsModalOpen(false);
-        formik.resetForm();
+        resetForm();
       } else {
+        console.log("consoling only in the lese bocl");
         toast.error(response?.data.msg);
       }
     } catch (error) {
+      console.log("consling if something went wrong", error);
       toast.error("Something went wrong!");
     }
   };
@@ -66,7 +93,7 @@ const page = () => {
         </div>
       </div>
       <div className="px-1 flex-grow ">
-        <ListTable />
+        <ListTable categoryList={categoryList} />
       </div>
 
       {/* Category adding option */}
@@ -164,7 +191,7 @@ const page = () => {
                 Category Status
               </p>
               <div>
-                <div className="toggler">
+                <div class="toggler">
                   <input
                     id="toggler-1"
                     name="isActive"
@@ -180,33 +207,33 @@ const page = () => {
                     }}
                     onBlur={handleBlur}
                   />
-                  <label htmlFor="toggler-1">
+                  <label for="toggler-1">
                     <svg
-                      className="toggler-on"
+                      class="toggler-on"
                       version="1.1"
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 130.2 130.2"
                     >
                       <polyline
-                        className="path check"
+                        class="path check"
                         points="100.2,40.2 51.5,88.8 29.8,67.5"
                       ></polyline>
                     </svg>
                     <svg
-                      className="toggler-off"
+                      class="toggler-off"
                       version="1.1"
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 130.2 130.2"
                     >
                       <line
-                        className="path line"
+                        class="path line"
                         x1="34.4"
                         y1="34.4"
                         x2="95.8"
                         y2="95.8"
                       ></line>
                       <line
-                        className="path line"
+                        class="path line"
                         x1="95.8"
                         y1="34.4"
                         x2="34.4"

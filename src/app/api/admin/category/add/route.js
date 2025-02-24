@@ -5,7 +5,8 @@ import axios from "axios";
 export const POST = async (req, res) => {
   try {
     const body = await req.json();
-    const response = await axios.post(`http://localhost:6001/admin/category`, {...body,});
+    console.log(body,'the body in teh consoe')
+    const response = await axios.post(`http://localhost:6002/admin/category`, {...body,});
     console.log(response.data,"consoling the response in the api route handler");
     if (
       response?.data?.msg === "Category created successfully" ||

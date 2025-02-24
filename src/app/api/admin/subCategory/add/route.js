@@ -6,7 +6,7 @@ export const POST = async (req, res) => {
   try {
     const body = await req.json();
     console.log(body, 'consoling the data in teh consle')
-    const response = await axios.post(`http://localhost:6001/admin/subCategory`, {...body,});
+    const response = await axios.post(`http://localhost:6002/admin/subCategory`, {...body,});
     console.log(response.data,"consoling the response in the api route handler");
     if (
       response?.data?.msg === "subCategory created successfully" ||

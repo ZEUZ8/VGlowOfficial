@@ -5,7 +5,7 @@ export const GET = async (req, { params }) => {
   try {
     const { id } = params;
     console.log(id)
-    const response = await axios.get(`http://localhost:6001/admin/subCategory/${id}`);
+    const response = await axios.get(`http://localhost:6002/admin/subCategory/${id}`);
     console.log('consoling the value in the consle9999')
     if (response?.data?.msg === "getting successfull") {
       return NextResponse.json(
