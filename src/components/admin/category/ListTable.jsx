@@ -118,7 +118,7 @@ export default function ListTable({ categoryList }) {
                 </th>
                 {/* <td class="px-6 py-4">sinan</td> */}
                 <td class="px-6 py-4">
-                  {item.isActive ? (
+                  {item?.isActive ? (
                     <div>
                       <p className="border px-3 py-1 rounded-full w-fit border-green-400 text-green-500 font-medium">
                         Active

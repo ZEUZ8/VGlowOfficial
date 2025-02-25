@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Trash } from "lucide-react";
@@ -7,22 +7,30 @@ import React from "react";
 const Delete = async (api) => {
   console.log("conslling the value in teh console", api);
   const response = await axios.delete(api);
+  console.log(response, "consoling the reponse the frontend");
   return response?.data;
 };
 
 const DeleteModal = ({ api, t }) => {
+  const queryClient = useQueryClient();
+
   const { mutate, isLoading } = useMutation({
     mutationFn: () => Delete(api), // ✅ Pass function reference correctly
-    onSuccess: () => {
-      toast.remove(t.id); // ✅ Close modal after deletion
-      toast.success("Deleted successfully");
+    onSuccess: (data) => {
+      toast.dismiss();
+      setTimeout(() => toast.dismiss(data?.msg), 2000);
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to delete");
+      toast.error(error.message || "Failed to delete", { duration: 3000 });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(["categories"]); // Always refresh the category list
+      queryClient.invalidateQueries(["suCategories"]); // Always refresh the category list
     },
   });
 
   const handleDelete = () => {
+    toast.remove(t.id); // ✅ Close modal after deletion
     mutate();
   };
 

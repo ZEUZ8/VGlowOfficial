@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import { categoryValidation } from "@/validation/admin/category";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Toggler from "./toggler";
 
 const fetchCategories = async () => {
@@ -14,8 +14,9 @@ const fetchCategories = async () => {
   return response?.data;
 };
 
-const addCategory = async () => {
-  const response = await axios.post("/api/admin/category");
+const addCategory = async (values) => {
+  const response = await axios.post("/api/admin/category/add", values);
+  console.log(response, "the resonse");
   return response.data;
 };
 
@@ -35,23 +36,28 @@ const page = () => {
     }
   }, [data]);
 
+  const mutation = useMutation({ mutationFn: addCategory });
+
   const onSubmit = async () => {
-    try {
-      //making the api for creating the category
-      const response = await axios.post("/api/admin/category/add", values);
-      console.log(response.data);
-      if (response.status == 201) {
-        toast.success("Category added successfully!");
-        setIsModalOpen(false);
-        resetForm();
-      } else {
-        console.log("consoling only in the lese bocl");
-        toast.error(response?.data.msg);
-      }
-    } catch (error) {
-      console.log("consling if something went wrong", error);
-      toast.error("Something went wrong!");
-    }
+    mutation.mutate(values, {
+      onSuccess: (data) => {
+        if (data?.msg == "Category created successfully") {
+          toast.success(data?.msg, { duration: 800 });
+          setIsModalOpen(false);
+          setCategoryList((prev) => [...prev, data.category]);
+          resetForm();
+        } else {
+          console.log("consoling only in the lese bocl");
+          toast.error(data?.msg || "Failed to add category", {
+            duration: 1000,
+          });
+        }
+      },
+      onError: (error) => {
+        console.log("consling if something went wrong", error);
+        toast.error("Something went wrong!");
+      },
+    });
   };
 
   const {

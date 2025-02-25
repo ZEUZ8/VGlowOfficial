@@ -20,7 +20,7 @@ const page = () => {
   const [subCategoryList, setSubCategoryList] = useState([]);
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["categories"],
+    queryKey: ["subCategories"],
     queryFn: fetchCategories,
     onSuccess: (data) => {
       if (data?.category) {
@@ -48,8 +48,6 @@ const page = () => {
           if (response?.data?.msg === "getting successfull") {
             setSubCategoryList(response?.data?.subCategory);
           }
-        } else {
-          toast.error("Not Found SubCategory");
         }
       } catch (err) {
         console.log(err, "consoling the erro");
@@ -66,20 +64,24 @@ const page = () => {
 
     onSuccess: (data) => {
       console.log(data, "data in the consle");
-      if (data.msg === "subCategory added") {
-        toast.success("subCategory Added");
-        setSubCategoryList(data?.subCategory);
+      if (data.msg === "SubCategory created successfully") {
+        toast.success(data?.msg, { duration: 1000 });
       } else {
         toast.error(data?.msg ?? "Somehting went wrong");
       }
     },
-
     onError: (error) => {
       toast.error(error?.response?.data?.msg || "product adding failed");
     },
-  });
 
-  
+    onSettled: (data) => {
+      setIsSubCategoryOpen(false);
+      if (data?.subCategory) {
+        console.log("consling if the subCategory exist");
+        setSubCategoryList((prev) => [...prev, data?.subCategory]);
+      }
+    },
+  });
 
   const onSubmit = () => {
     mutate(values);
@@ -104,6 +106,7 @@ const page = () => {
     validationSchema: categoryValidation,
     onSubmit,
   });
+
   useEffect(() => {
     console.log(values, " consoling values for checking ");
   }, [values]);
@@ -118,7 +121,6 @@ const page = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      
       <Toaster position="top-center" reverseOrder={false} />
       <div className="p-2 grid lg:grid-cols-6">
         <div className=" lg:hidden flex justify-end items-center py-4">

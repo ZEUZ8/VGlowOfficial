@@ -13,7 +13,7 @@ export const POST = async (req, res) => {
       response.status === 201
     ) {
       return NextResponse.json(
-        { msg: response?.data?.msg, category: response?.data?.category },
+        { msg: response?.data?.msg, subCategory: response?.data?.subCategory },
         { status: response?.status}
       );
     } else {

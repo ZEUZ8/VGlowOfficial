@@ -2,9 +2,11 @@ import { NextResponse } from "next/server";
 import axios from "axios";
 
 export const DELETE = async (req,{params}) => {
+  console.log('consoling the value')
   try {
     const { id } = params;
-    const response = await axios.delete(`http://localhost:6002/admin/category/${id}`);
+    const response = await axios.delete(`http://localhost:6002/admin/subCategory/${id}`);
+    console.log(response,'the response')
     if (
       response?.data?.msg === "subCategory Deleted" ||
       response.status === 201
@@ -21,6 +23,7 @@ export const DELETE = async (req,{params}) => {
       );
     }
   } catch (err) {
+    console.log(err,'error in the subCateogry deleting api route handler ')
     return NextResponse.json(
       { msg: "Erorr in Category List" },
       { status: 500 }
