@@ -5,29 +5,42 @@ import { ChevronDown, CircleX, CloudLightning } from "lucide-react";
 import { useFormik } from "formik";
 import { categoryValidation } from "@/validation/admin/category";
 import axios from "axios";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast, { Toaster } from "react-hot-toast";
 import "../toggler.css";
+import { useCategories, useSubCategories } from "@/hooks/admin/categories";
 
 const fetchCategories = async () => {
   const response = await axios.get("/api/admin/category");
   return response?.data;
 };
+const fetchSubCategories = async (parent) => {
+  const parentData = categoryList.find((item) => item.categoryName === parent);
+  const response = await axios.get(
+    `/api/admin/subCategory/get/${parentData?._id}`
+  );
+  return response?.data;
+};
+
 const page = () => {
+  const queryClient = useQueryClient();
+
   const [isSubCategoryOpen, setIsSubCategoryOpen] = useState(false);
   const [parent, setParent] = useState("");
   const [categoryList, setCategoryList] = useState([]);
   const [subCategoryList, setSubCategoryList] = useState([]);
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["subCategories"],
-    queryFn: fetchCategories,
-    onSuccess: (data) => {
-      if (data?.category) {
-        console.log("conslig the data only if data exists");
-      }
-    },
-  });
+  // const { data, isLoading, isError } = useQuery({
+  //   queryKey: ["categories"],
+  //   queryFn: fetchCategories,
+  //   onSuccess: (data) => {
+  //     if (data?.category) {
+  //       console.log("conslig the data only if data exists");
+  //     }
+  //   },
+  // });
+
+  const { data, isLoading, isError } = useCategories();
 
   useEffect(() => {
     if (data?.category) {
@@ -35,26 +48,53 @@ const page = () => {
     }
   }, [data]);
 
+  const { data: subCategoy } = useSubCategories(parent, categoryList);
+
   useEffect(() => {
-    async function getting(params) {
-      try {
-        const parentData = categoryList.find(
-          (item) => item.categoryName === parent
-        );
-        if (parentData) {
-          const id = parentData?._id;
-          const response = await axios.get(`/api/admin/subCategory/get/${id}`);
-          console.log(response, "the repsonse consling int frontend");
-          if (response?.data?.msg === "getting successfull") {
-            setSubCategoryList(response?.data?.subCategory);
-          }
-        }
-      } catch (err) {
-        console.log(err, "consoling the erro");
-      }
+    if (subCategoy?.msg === "getting successfull") {
+      setSubCategoryList(subCategoy?.subCategory);
     }
-    getting();
-  }, [parent]);
+  }, [subCategoy]);
+
+  // const { data: subCategory } = useQuery({
+  //   queryKey: ["subCategories", parent],
+  //   queryFn: () => fetchSubCategories(parent),
+  //   enabled: !!parent,
+  // });
+
+  // useEffect(() => {
+  //   console.log("consoling teh value in te sone", subCategory);
+  //   if (subCategory) {
+  //     console.log(subCategory);
+  //     setSubCategoryList((prev) => [
+  //       ...prev,
+  //       ...(subCategory?.subCategory || []),
+  //     ]);
+  //   }
+  // }, [subCategory]);
+
+  // useEffect(() => {
+  //   async function getting(params) {
+  //     try {
+  //       const parentData = categoryList.find(
+  //         (item) => item.categoryName === parent
+  //       );
+  //       if (parentData) {
+  //         const id = parentData?._id;
+  //         const response = await axios.get(`/api/admin/subCategory/get/${id}`);
+  //         console.log(response, "the repsonse consling int frontend");
+  //         if (response?.data?.msg === "getting successfull") {
+  //           setSubCategoryList(response?.data?.subCategory);
+  //           console.log(parent,'chumma consoling')
+  //           queryClient.invalidateQueries(["subCategories", parent]);
+  //         }
+  //       }
+  //     } catch (err) {
+  //       console.log(err, "consoling the erro");
+  //     }
+  //   }
+  //   getting();
+  // }, [parent]);
 
   const { mutate } = useMutation({
     mutationFn: async (values) => {
@@ -65,6 +105,8 @@ const page = () => {
     onSuccess: (data) => {
       console.log(data, "data in the consle");
       if (data.msg === "SubCategory created successfully") {
+        setIsSubCategoryOpen(false);
+        queryClient.invalidateQueries(["subCategories", parent]);
         toast.success(data?.msg, { duration: 1000 });
       } else {
         toast.error(data?.msg ?? "Somehting went wrong");
@@ -74,13 +116,12 @@ const page = () => {
       toast.error(error?.response?.data?.msg || "product adding failed");
     },
 
-    onSettled: (data) => {
-      setIsSubCategoryOpen(false);
-      if (data?.subCategory) {
-        console.log("consling if the subCategory exist");
-        setSubCategoryList((prev) => [...prev, data?.subCategory]);
-      }
-    },
+    // onSettled: (data) => {
+    //   if (data?.subCategory) {
+    //     console.log("consling if the subCategory exist");
+    //     setSubCategoryList((prev) => [...prev, data?.subCategory]);
+    //   }
+    // },
   });
 
   const onSubmit = () => {
@@ -247,7 +288,7 @@ const page = () => {
             </div>
           </>
         ) : subCategoryList?.length > 0 ? (
-          <ListTable categoryList={subCategoryList} />
+          <ListTable categoryList={subCategoryList} parent={parent} />
         ) : (
           <div className="py-2 px-3">
             <div className="border p-4 border-dashed border-red-500 rounded-lg flex justify-start items-center">

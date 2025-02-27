@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import DeleteModal from "../deleteModal/DeleteModal";
 
-export default function ListTable({ categoryList }) {
+export default function ListTable({ categoryList,parent }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("Last 30 days");
 
@@ -18,7 +18,7 @@ export default function ListTable({ categoryList }) {
   const handleDelete = async (item) => {
     const api = `/api/admin/${section}/delete/${item._id}`;
     toast.remove("delete-toast");
-    toast.custom((t) => <DeleteModal t={t} api={api} />, {
+    toast.custom((t) => <DeleteModal t={t} api={api} parent={parent} />, {
       id: "delete-toast",
     });
   };

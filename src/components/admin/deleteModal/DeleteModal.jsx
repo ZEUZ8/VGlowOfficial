@@ -5,27 +5,27 @@ import { Trash } from "lucide-react";
 import React from "react";
 
 const Delete = async (api) => {
-  console.log("conslling the value in teh console", api);
   const response = await axios.delete(api);
-  console.log(response, "consoling the reponse the frontend");
   return response?.data;
 };
 
-const DeleteModal = ({ api, t }) => {
+const DeleteModal = ({ api, t, parent }) => {
   const queryClient = useQueryClient();
+  console.log(api, "the current api in the console");
+  console.log(api.includes("subCategory"), " subCategory status");
 
   const { mutate, isLoading } = useMutation({
     mutationFn: () => Delete(api), // ✅ Pass function reference correctly
     onSuccess: (data) => {
-      toast.dismiss();
-      setTimeout(() => toast.dismiss(data?.msg), 2000);
+      const subCategory = api.includes("subCategory");
+      if (subCategory) {
+        queryClient.invalidateQueries(["suCategories", parent]); // Always refresh the category list
+      } else {
+        queryClient.invalidateQueries(["categories"]); // Always refresh the category list
+      }
     },
     onError: (error) => {
       toast.error(error.message || "Failed to delete", { duration: 3000 });
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries(["categories"]); // Always refresh the category list
-      queryClient.invalidateQueries(["suCategories"]); // Always refresh the category list
     },
   });
 
