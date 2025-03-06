@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export const GET = async(req,res) => {
     try {
-        const response = await axios.get(`http://localhost:6001/list`)
+        const response = await axios.get(`http://localhost:6001/admin/products`)
         if(response?.data?.msg === "getting successfull"){
           return NextResponse.json(
             { msg: response?.data?.msg, products:response?.data?.products},

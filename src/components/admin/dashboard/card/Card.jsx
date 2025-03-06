@@ -9,9 +9,9 @@ const Cards = ({ title, amount, percentage,color,i }) => {
 
       <p className={`text-sm font-semibold text-start py-3 text-black dark:text-white`}>{title}</p>
 
-      <div className=" grid grid-flow-col justify-stretch ">
-        <p className={`text-3xl font-medium py-3 `} style={{color:color}}>
-          {amount}.000
+      <div className=" flex justify-between items-center max-w-full">
+        <p className={`text-2xl font-medium py-3 `} style={{color:color}}>
+          {amount}.00
           <span className={`text-base font-medium ${theme === "dark" ? "text-white" : "text-black"}`}>AED</span>
         </p>
       </div>

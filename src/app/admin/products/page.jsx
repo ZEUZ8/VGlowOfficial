@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./add/Navbar";
 import {
   ChevronDown,
@@ -18,14 +18,15 @@ import {
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import ListTable from "@/components/admin/products/ListTable";
 
 const fetchProducts = async () => {
-  const { data } = await axios.get("/api/products");
+  const { data } = await axios.get("/api/admin/products/get");
   return data;
 };
 
 const page = () => {
-  const list = [34, 3453, 53, 35, 23, 5, 2353];
+  const [productList, setProductList] = useState([]);
   const productId = "679dd05be5ee9ef1d2ffe0d5";
   const queryclient = useQueryClient();
 
@@ -33,6 +34,17 @@ const page = () => {
     const { data } = await axios.patch(`/api/admin/products/delete/${id}`);
     return data;
   };
+
+  const { data } = useQuery({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
+  });
+
+  useEffect(() => {
+    if (data?.products) {
+      setProductList(data?.products);
+    }
+  }, [data]);
 
   // use this in the fute muc more easier and faster right now just complete and later implent tis ************
   // const mutation = useMutation({
@@ -74,7 +86,7 @@ const page = () => {
               <input
                 placeholder="Search"
                 type="text"
-                className=" px-3 py-2 bg-gray-100 rounded-lg placeholder:text-sm text-sm"
+                className=" px-3 py-2 bg-white rounded-lg placeholder:text-sm text-sm"
               />
               <p className="absolute right-2 bottom-0 m-1 top-0  flex justify-end items-center">
                 <Search className="w-4 h-4 text-gray-700" />
@@ -83,11 +95,11 @@ const page = () => {
           </div>
 
           <div className="flex justify-center items-center gap-2">
-            <div className="flex justify-center items-center border border-gray-700 text-gray-700 rounded-xl py-2 px-3 cursor-pointer text-sm">
+            <div className="flex justify-center items-center border bg-gray-200 border-gray-200 text-black font-[3px] rounded-xl p-2 cursor-pointer text-sm">
               <select
                 name="sort"
                 id=""
-                className="ring-0 focus:ring-0 focus:outline-none"
+                className="ring-0 focus:ring-0 focus:outline-none bg-gray-200"
               >
                 <option value="" disabled="disabled" selected={true}>
                   sort by
@@ -139,275 +151,10 @@ const page = () => {
         </div>
       </div>
 
-      <div className="p-2 ">
+      <div className="p-4 ">
         <div className="">
-          {/* <div>
-            <div className="flex items-center">
-              <div>
-                <input type="checkbox" />
-              </div>
-              <div></div>
-            </div>
-          </div> */}
-          <div class="relative overflow-x-auto h-[100vh]">
-            <div>
-              {list.map((item, i) => (
-                <div
-                  key={i}
-                  class="max-lg:hidden relative overflow-x-auto  rounded-lg border  mb-2 "
-                >
-                  <div className="flex items-center justify-between gap-3  p-3 ">
-                    <div className="flex items-center gap-3">
-                      <div>
-                        <input type="checkbox" />
-                      </div>
-                      <div className="flex justify-center items-center gap-2">
-                        <div className="w-[4rem] h-[4rem]  rounded-lg overflow-hidden">
-                          <img
-                            src="/rashi.png"
-                            alt=""
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium ">Face Wash</p>
-                          <p className="text-xs font-light">
-                            Minimalist Vitamince c Foaming Face Wash
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex justify-center items-center gap-2">
-                        <div className="p-1 px-2 bg-gray-200 border border-gray-200 rounded-md">
-                          <p className="text-[.65rem]  text-gray-600">
-                            Skin Care
-                          </p>
-                        </div>
-                        <div className="p-1 px-2 bg-gray-200 border border-gray-200 rounded-md">
-                          <p className="text-[.65rem]  text-gray-600">
-                            Face Wash
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex justify-center items-center gap-2">
-                        <div className="p-1 px-2 bg-green-400 border border-green-400 rounded-full">
-                          <p className="text-[.65rem]  text-black">30gm</p>
-                        </div>
-                        <div className="p-1 px-2 bg-green-400 border border-green-400 rounded-full">
-                          <p className="text-[.65rem]  text-black">50gm</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-center items-center">
-                      <p>
-                        <IndianRupee className="w-4 h-4 text-gray-700 " />
-                      </p>
-                      <p className="font-sans text-gray-700">599</p>
-                    </div>
-
-                    <div>
-                      <p className="text-sm text-gray-600">304</p>
-                    </div>
-
-                    <div>
-                      <p className="text-sm text-gray-600">{item}</p>
-                    </div>
-
-                    <div className="flex justify-center items-center gap-1 ">
-                      <p>
-                        <Star
-                          className="w-3 h-3 "
-                          fill="#FFD700"
-                          stroke="#FFD700"
-                        />
-                      </p>
-                      <p>
-                        <Star
-                          className="w-3 h-3 "
-                          fill="#FFD700"
-                          stroke="#FFD700"
-                        />
-                      </p>
-                      <p>
-                        <Star
-                          className="w-3 h-3 "
-                          fill="#FFD700"
-                          stroke="#FFD700"
-                        />
-                      </p>
-                      <p>
-                        <Star className="w-3 h-3 " stroke="#708090" />
-                      </p>
-                    </div>
-
-                    <div className="flex justify-center items-center gap-2 cursor-pointer mr-4 ">
-                      <Link href="/admin/products/edit/45">
-                        <div className=" border rounded-md bg-gray-200  p-2">
-                          <p>
-                            <Pencil className="w-4 h-4 text-black" />
-                          </p>
-                        </div>
-                      </Link>
-                      <div
-                        className="border rounded-md bg-gray-200 p-2"
-                        onClick={handleDelete}
-                      >
-                        {i === 1 || i === 4  ? (
-                          <p>
-                            <RotateCcw className="w-4 h-4 text-black" />
-                          </p>
-                        ) : (
-                          <p>
-                            <Trash2 className="w-4 h-4 text-black" />
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="lg:hidden ">
-              {list.map((item, i) => (
-                <div
-                  key={i}
-                  class="relative overflow-x-auto shadow-md rounded-lg border  mb-2 max-[100vw]"
-                >
-                  <div className="grid gap-2 p-3 ">
-                    <div>
-                      <input type="checkbox" />
-                    </div>
-                    <div className="flex justify-start items-center gap-2">
-                      <div className="w-[4rem] h-[4rem]  rounded-lg overflow-hidden">
-                        <img
-                          src="/rashi.png"
-                          alt=""
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium ">Face Wash</p>
-                        <p className="text-xs font-light">
-                          Minimalist Vitamince c Foaming Face Wash
-                        </p>
-                      </div>
-                    </div>
-                    <div className="col-span-1 flex justify-between items-center ">
-                      <div>
-                        <div className="flex justify-center items-center gap-2">
-                          <div className="p-1 px-2 bg-gray-200 border border-gray-200 rounded-md">
-                            <p className="text-[.65rem]  text-gray-600">
-                              Skin Care
-                            </p>
-                          </div>
-                          <div className="p-1 px-2 bg-gray-200 border border-gray-200 rounded-md">
-                            <p className="text-[.65rem]  text-gray-600">
-                              Face Wash
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div>
-                        <div className="flex justify-center items-center gap-2">
-                          <div className="p-1 px-2 bg-green-400 border border-green-400 rounded-full">
-                            <p className="text-[.65rem]  text-black">30gm</p>
-                          </div>
-                          <div className="p-1 px-2 bg-green-400 border border-green-400 rounded-full">
-                            <p className="text-[.65rem]  text-black">50gm</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-span-1 py-3 ">
-                      <div className="flex justify-between items-center">
-                        <p className="text-sm text-gray-600">Price</p>
-                        <div className="flex items-center">
-                          <p>
-                            <IndianRupee className="w-4 h-4 text-gray-700 " />
-                          </p>
-                          <p className="font-sans text-gray-700">599</p>
-                        </div>
-                      </div>
-
-                      <div className="py-1 flex items-center justify-between">
-                        <p className="text-sm text-gray-600">Stock</p>
-                        <p className="text-sm text-gray-600">304</p>
-                      </div>
-
-                      <div className="py-1 flex items-center justify-between">
-                        <p className="text-sm text-gray-600">Sku</p>
-                        <p className="text-sm text-gray-600">{item}</p>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-between items-center ">
-                      <div className="flex justify-center items-center gap-1 ">
-                        <p>
-                          <Star
-                            className="w-3 h-3 "
-                            fill="#FFD700"
-                            stroke="#FFD700"
-                          />
-                        </p>
-                        <p>
-                          <Star
-                            className="w-3 h-3 "
-                            fill="#FFD700"
-                            stroke="#FFD700"
-                          />
-                        </p>
-                        <p>
-                          <Star
-                            className="w-3 h-3 "
-                            fill="#FFD700"
-                            stroke="#FFD700"
-                          />
-                        </p>
-                        <p>
-                          <Star className="w-3 h-3 " stroke="#708090" />
-                        </p>
-                        <p className="text-gray-700 text-xs">3</p>
-                      </div>
-                      <div className="flex justify-center items-center gap-2 cursor-pointer">
-                        <Link href="/admin/products/add">
-                          <div className=" border rounded-md bg-gray-200  p-2 flex justify-between items-center gap-3">
-                            <p>
-                              <Pencil className="w-4 h-4 text-black" />
-                            </p>
-                            <p className="text-sm text-gray-600">Edit</p>
-                          </div>
-                        </Link>
-                        <div
-                          className="border rounded-md p-2 bg-gray-200"
-                          onClick={handleDelete}
-                        >
-                          <div className="flex justify-between items-center gap-3">
-                            {i == 1 || i == 4   ? (
-                              <p>
-                                <RotateCcw className="w-4 h-4 text-black" />
-                              </p>
-                            ) : (
-                              <p>
-                                <Trash2 className="w-4 h-4 text-black" />
-                              </p>
-                            )}
-                            <p className="text-sm text-black font-light">
-                              Delete
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div class="relative overflow-x-auto h-[90vh] scrollbar-hide">
+            <ListTable productList={productList} />
           </div>
         </div>
       </div>

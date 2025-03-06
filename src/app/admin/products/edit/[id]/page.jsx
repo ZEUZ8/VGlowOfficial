@@ -6,15 +6,16 @@ import toast, { Toaster } from "react-hot-toast";
 import { productValidation } from "@/validation/admin/product";
 import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import Navbar from "../../add/Navbar";
 import Category from "../../add/Category";
 import Pricing from "../../add/Pricing";
 import ImageUpload from "../../add/imageUpload";
+import { useParams } from "next/navigation";
+import EditNavbar from "@/components/admin/products/EditNavbar";
 
 //when page loading getting the product for updation with the id from the path
 
 const page = () => {
-  const productId = "679dc79f448265ffc7b98caa";
+  const {id} = useParams();
   const [sizes, setSizes] = useState([50, 60, 70, 45, 30, 15]);
   const [product, setProduct] = useState({});
 
@@ -47,7 +48,7 @@ const page = () => {
     const getting = async () => {
       try {
         const response = await axios.get(
-          `/api/admin/products/get/${productId}`
+          `/api/admin/products/get/${id}`
         );
         if (response?.data?.msg === "found product") {
           setProduct(response?.data?.product);
@@ -164,7 +165,7 @@ const page = () => {
   return (
     <div className="">
       <Toaster position="top-center" reverseOrder={false} />
-      <Navbar handleSubmit={handleSubmit} />
+      <EditNavbar handleSubmit={handleSubmit}/>
       <div className="p-2 max-h-[90vh] overflow-y-auto ">
         <div className="grid grid-cols-10 gap-3">
           <div className="col-span-10 lg:col-span-6">

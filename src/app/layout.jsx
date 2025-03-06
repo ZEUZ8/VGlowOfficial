@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
         <>
           <div className=" relative">
             <Clientcomponent/>
-            <Navbar />
+            {/* <Navbar /> */}
           </div>
           <Provider>{children}</Provider>
         </>

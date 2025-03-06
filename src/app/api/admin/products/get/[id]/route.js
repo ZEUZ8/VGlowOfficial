@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export const GET = async (req, { params }) => {
   try {
     const { id } = params;
-    const response = await axios.get(`http://localhost:6001/list/${id}`);
+    const response = await axios.get(`http://localhost:6001/admin/product/${id}`);
     if (response?.data?.msg === "found product") {
       return NextResponse.json(
         { msg: response?.data?.msg, product: response?.data?.existingProduct },
