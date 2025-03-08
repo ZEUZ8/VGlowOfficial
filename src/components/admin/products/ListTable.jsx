@@ -1,30 +1,40 @@
 "use client";
-import { Link, Trash2 } from "lucide-react";
+import { Link, RefreshCw, Trash2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import DeleteModal from "../deleteModal/DeleteModal";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+const softDelete = async (id) => {
+  const { data } = await axios.patch(`/api/admin/products/delete/${id}`);
+  return data;
+};
 
 export default function ListTable({ productList }) {
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("Last 30 days");
+  const queryclient = useQueryClient();
 
   const pathName = usePathname();
   const router = useRouter();
 
-  //   const handleDelete = async (item) => {
-  //     const api = `/api/admin/${section}/delete/${item._id}`;
-  //     toast.remove("delete-toast");
-  //     toast.custom((t) => <DeleteModal t={t} api={api} parent={parent} />, {
-  //       id: "delete-toast",
-  //     });
-  //   };
-  //   const handleEdit = (item) => {
-  //     console.log("consling the edit", item);
-  //   };
+  const { mutate } = useMutation({
+    mutationFn: (productId) => softDelete(productId),
+    onSuccess: (data) => {
+      if (data?.msg == "product disabled" || "product recovered") {
+        queryclient.invalidateQueries(["products"]);
+        toast.success(data?.msg);
+      }
+    },
+  });
+
+  const handleDelete = (item) => {
+    mutate(item?._id);
+  };
 
   const handleSelectAll = () => {
     if (selectAll) {
@@ -122,7 +132,9 @@ export default function ListTable({ productList }) {
                 }}
                 className={`${
                   productList?.length > 1 && "border-b"
-                } dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 `}
+                } dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 ${
+                  item?.isDeleted && " opacity-45 "
+                }`}
               >
                 <td class="w-4 p-2">
                   <div class="flex items-center justify-center">
@@ -160,8 +172,14 @@ export default function ListTable({ productList }) {
                   class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
                   {/* {item?.productName} */}
-                  <div className="">
-                    <p>Product Name</p>
+                  <div className="relative">
+                    <div className=" group max-w-[150px] overflow-hidden truncate whitespace-nowrap">
+                      {item?.productName}
+
+                      <div className="absolute left-0 top-full mt-1 opacity-0 invisible group-hover:opacity-100  group-hover:visible transition-opacity duration-200 bg-gray-500 text-white text-xs rounded-md p-1 px-2 w-max min-w-[200px] z-50 shadow-lg">
+                        {item?.productName}
+                      </div>
+                    </div>
                   </div>
                 </th>
                 {/* <td class="px-6 py-4">sinan</td> */}
@@ -203,10 +221,17 @@ export default function ListTable({ productList }) {
                 <td class=" py-2 ">
                   {/* <div className="flex justify-center items-center "> */}
                   <p
-                    class="not-edit font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer px-4"
-                    onClick={(e) => handleDelete(item)}
+                    class="not-edit font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer px-4 "
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete(item);
+                    }}
                   >
-                    <Trash2 className="h-4 w-4 " />
+                    {item?.isDeleted ? (
+                      <RefreshCw className="h-4 w-4 text-blue-600 " />
+                    ) : (
+                      <Trash2 className="h-4 w-4 text-red-700" />
+                    )}
                   </p>
                   {/* </div> */}
                 </td>

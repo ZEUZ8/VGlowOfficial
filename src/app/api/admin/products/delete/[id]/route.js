@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export const PATCH = async (req, { params }) => {
   try {
     const { id } = params;
-    const response = await axios.patch(`http://localhost:6001/delete/${id}`);
+    const response = await axios.patch(`http://localhost:6001/admin/delete/${id}`);
     if (response && response.status == 201) {
       return NextResponse.json({ msg: response?.data?.msg }, { status: 201 });
     } else {

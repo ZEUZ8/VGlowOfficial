@@ -94,6 +94,7 @@ const page = () => {
   });
 
   const onSubmit = async() => {
+    console.log('consling the values and confrimring getting into the functions')
     mutate(values)
   };
 

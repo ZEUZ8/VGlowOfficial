@@ -6,6 +6,7 @@ import {
   SquareCheckBig,
   CloudUpload,
   Pencil,
+  Trash2,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -18,39 +19,35 @@ const EditNavbar = ({ handleSubmit }) => {
   }, []);
 
   return (
-    <div>
-      <div className="flex justify-between py-3 ">
+    <div className="bg-white rounded-lg">
+      <div className="flex justify-between py-3 px-2 pr-5">
         <div className="flex justify-center items-center">
           <div>
-            {editStatus ? (
-              <Pencil className="mx-2 h-5 w-5" />
-            ) : (
-              <Store className="mx-2 h-5 w-5" />
-            )}
+            <Pencil className="mx-2 h-5 w-5" />
           </div>
-          <p className="md:text-center font-normal text-xs md:text-sm lg:text-base">
-            {editStatus ? "Edit Product" : "Ad new Product"}
+          <p className="md:text-center font-medium text-sm lg:text-base">
+            Edit Product
           </p>
         </div>
         <div className="flex justify-center items-center gap-2">
-          <div className="flex justify-center items-center border border-black rounded-xl p-2 px-2 sm:px-3 gap-1 cursor-pointer ">
+          <div className="flex justify-center items-center border border-gray-400 rounded-lg py-1 px-2 gap-1 cursor-pointer ">
             <div>
-              <StickyNote className="w-3 md:w-4 h-3 md:h-4 " />
+              <Trash2 className="w-3 md:w-4 h-3 md:h-4 " />
             </div>
             <div>
-              <p className="text-xs sm:text-sm ">Save Draft</p>
+              <p className="text-xs sm:text-sm ">Delete</p>
             </div>
           </div>
           <button
             type="button"
             onClick={handleSubmit}
-            className="flex justify-center items-center border border-black rounded-xl p-2 px-2 sm:px-3 gap-1 cursor-pointer "
+            className="flex justify-center items-center border border-gray-400 rounded-lg py-1 px-2 gap-1 cursor-pointer "
           >
             <div>
               <CloudUpload className="w-4 h-4 " />
             </div>
             <div>
-              <p className="text-xs sm:text-sm ">Update Product</p>
+              <p className="text-xs sm:text-sm ">Update</p>
             </div>
           </button>
         </div>

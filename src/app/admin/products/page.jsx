@@ -24,21 +24,17 @@ const fetchProducts = async () => {
   const { data } = await axios.get("/api/admin/products/get");
   return data;
 };
+const softDelete = async (id) => {
+  const { data } = await axios.patch(`/api/admin/products/delete/${id}`);
+  return data;
+};
 
 const page = () => {
   const [productList, setProductList] = useState([]);
   const productId = "679dd05be5ee9ef1d2ffe0d5";
   const queryclient = useQueryClient();
 
-  const softDelete = async (id) => {
-    const { data } = await axios.patch(`/api/admin/products/delete/${id}`);
-    return data;
-  };
-
-  const { data } = useQuery({
-    queryKey: ["products"],
-    queryFn: fetchProducts,
-  });
+  const { data } = useQuery({ queryKey: ["products"], queryFn: fetchProducts });
 
   useEffect(() => {
     if (data?.products) {
@@ -154,7 +150,7 @@ const page = () => {
       <div className="p-4 ">
         <div className="">
           <div class="relative overflow-x-auto h-[90vh] scrollbar-hide">
-            <ListTable productList={productList} />
+            <ListTable productList={productList} handleDelete={handleDelete}/>
           </div>
         </div>
       </div>
