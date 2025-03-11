@@ -1,19 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { Plus } from "lucide-react";
 import axios, { formToJSON } from "axios";
 
-const ImageUpload = ({ formik }) => {
-  console.log(formik.values);
-  const initialImages = [
-    // "/wood&orange.png",
-    // "/withGrape.png",
-    // "/onRock.png",
-    // "https://res.cloudinary.com/dxkddwswi/image/upload/v1741596593/uploads/mvhro7r6r4gg9tk2k9u0.jpg",
-    // "/rashi.png",
-  ];
+const ImageUpload = forwardRef(({ formik, setFieldValue, product }, ref) => {
+  console.log(product?.images, " the console");
 
   const fileRef = useRef();
-  const [images, setImages] = useState(initialImages);
+  const [images, setImages] = useState(product?.images ?? []);
   const [coverImage, setCoverImage] = useState(images[0] ?? "");
   const [selectedImage, setSelectedImage] = useState([]);
   const [uploadedImageUrls, setUploadedImageUrls] = useState([]);
@@ -21,6 +20,12 @@ const ImageUpload = ({ formik }) => {
   const handleDivClick = () => {
     fileRef.current.click(); // Trigger the file input when the div is clicked
   };
+
+  useEffect(() => {
+    if (product?.images) {
+      setImages(product.images);
+    }
+  }, [product?.images]);
 
   const handleDragStart = (event, image) => {
     event.dataTransfer.setData("imageSrc", image);
@@ -91,7 +96,7 @@ const ImageUpload = ({ formik }) => {
         });
         console.log(response);
         if (response.data?.url) {
-          uploadedUrls.push(response.data.url);
+          uploadedUrls.push(response.data?.secure_url);
         } else {
           alert("Upload failed for an image: " + res.data?.error);
         }
@@ -103,7 +108,10 @@ const ImageUpload = ({ formik }) => {
 
     // setUploadedImageUrls(uploadedUrls); // Store uploaded URLs in state
     setUploadedImageUrls((prev) => [...prev, ...uploadedUrls]); // Store uploaded URLs
-    formik?.values?.images.push(...uploadedImageUrls)
+    setFieldValue("images", [
+      ...(formik?.values.images || []),
+      ...uploadedUrls,
+    ]);
     setImages((prev) => [
       ...prev.filter((img) => !img.startsWith("blob:")), // Remove local previews
       ...uploadedUrls,
@@ -195,6 +203,6 @@ const ImageUpload = ({ formik }) => {
       </div>
     </div>
   );
-};
+});
 
 export default ImageUpload;

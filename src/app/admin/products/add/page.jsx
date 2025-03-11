@@ -162,7 +162,7 @@ const page = () => {
           </div>
 
           <div className="col-span-10 lg:col-span-4">
-            <ImageUpload formik={formik} />
+            <ImageUpload formik={formik}  />
             <div>
               <div className="bg-gray-100 border border-gray-100 rounded-lg my-3 px-4 py-2">
                 <div className="">

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Plus, X } from "lucide-react";
 import { useFormik } from "formik";
 import toast, { Toaster } from "react-hot-toast";
@@ -15,7 +15,8 @@ import EditNavbar from "@/components/admin/products/EditNavbar";
 //when page loading getting the product for updation with the id from the path
 
 const page = () => {
-  const {id} = useParams();
+  const imageUploadRef = useRef()
+  const { id } = useParams();
   const [sizes, setSizes] = useState([50, 60, 70, 45, 30, 15]);
   const [product, setProduct] = useState({});
 
@@ -47,9 +48,7 @@ const page = () => {
   useEffect(() => {
     const getting = async () => {
       try {
-        const response = await axios.get(
-          `/api/admin/products/get/${id}`
-        );
+        const response = await axios.get(`/api/admin/products/get/${id}`);
         if (response?.data?.msg === "found product") {
           setProduct(response?.data?.product);
         } else {
@@ -69,22 +68,27 @@ const page = () => {
     mutationFn: async (values) => {
       const payload = {
         ...values, // Spread existing form values
-        id: product._id // Add product ID dynamically
-      }
-      const response = await axios.put("/api/admin/products/update",payload);
-      console.log(response,'the respones')
+        id: product._id, // Add product ID dynamically
+      };
+      const response = await axios.put("/api/admin/products/update", payload);
+      console.log(response, "the respones");
       return response.data;
     },
 
     onSuccess: (data) => {
       resetForm();
-      console.log(data.msg,data.status,data,' consoling al response in the console')
-      if(data?.msg === "Product updated successfully"){
-        console.log(data?.msg)
-        toast.success("Product updated")
-      }else{
-        console.log('chumma',data?.msg)
-        toast.error(data?.msg)
+      console.log(
+        data.msg,
+        data.status,
+        data,
+        " consoling al response in the console"
+      );
+      if (data?.msg === "Product updated successfully") {
+        console.log(data?.msg);
+        toast.success("Product updated");
+      } else {
+        console.log("chumma", data?.msg);
+        toast.error(data?.msg);
       }
     },
 
@@ -93,9 +97,8 @@ const page = () => {
     },
   });
 
-  const onSubmit = async() => {
-    console.log('consling the values and confrimring getting into the functions')
-    mutate(values)
+  const onSubmit = async () => {
+    mutate(values);
   };
 
   const formik = useFormik({
@@ -166,7 +169,7 @@ const page = () => {
   return (
     <div className="">
       <Toaster position="top-center" reverseOrder={false} />
-      <EditNavbar handleSubmit={handleSubmit}/>
+      <EditNavbar handleSubmit={handleSubmit} />
       <div className="p-2 max-h-[90vh] overflow-y-auto ">
         <div className="grid grid-cols-10 gap-3">
           <div className="col-span-10 lg:col-span-6">
@@ -222,7 +225,12 @@ const page = () => {
           </div>
 
           <div className="col-span-10 lg:col-span-4">
-            <ImageUpload />
+            <ImageUpload
+              formik={formik}
+              setFieldValue={setFieldValue}
+              product={product}
+              ref={imageUploadRef}
+            />
             <div>
               <div className="bg-gray-100 border border-gray-100 rounded-lg my-3 px-4 py-2">
                 <div className="">

@@ -161,8 +161,8 @@ export default function ListTable({ productList }) {
                 <th className="p-2">
                   <div className="h-[3rem] w-[3rem]">
                     <img
-                      src="/onRock.png"
-                      className="rounded-md object-contain w-full h-full"
+                      src={item?.images[0]}
+                      className="rounded-md object-cover w-full h-full"
                       alt=""
                     />
                   </div>
