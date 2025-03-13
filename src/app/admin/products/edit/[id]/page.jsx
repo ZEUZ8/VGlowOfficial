@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Plus, X } from "lucide-react";
 import { useFormik } from "formik";
 import toast, { Toaster } from "react-hot-toast";
@@ -15,7 +15,6 @@ import EditNavbar from "@/components/admin/products/EditNavbar";
 //when page loading getting the product for updation with the id from the path
 
 const page = () => {
-  const imageUploadRef = useRef()
   const { id } = useParams();
   const [sizes, setSizes] = useState([50, 60, 70, 45, 30, 15]);
   const [product, setProduct] = useState({});
@@ -63,6 +62,10 @@ const page = () => {
     getting();
   }, []);
 
+  useEffect(() => {
+    console.log(values, " conksling the values ");
+  }, [values]);
+  
   // console.log(product,'the data')
   const { mutate } = useMutation({
     mutationFn: async (values) => {
@@ -71,7 +74,6 @@ const page = () => {
         id: product._id, // Add product ID dynamically
       };
       const response = await axios.put("/api/admin/products/update", payload);
-      console.log(response, "the respones");
       return response.data;
     },
 
@@ -229,7 +231,6 @@ const page = () => {
               formik={formik}
               setFieldValue={setFieldValue}
               product={product}
-              ref={imageUploadRef}
             />
             <div>
               <div className="bg-gray-100 border border-gray-100 rounded-lg my-3 px-4 py-2">

@@ -24,10 +24,6 @@ export const POST = async (req) => {
     const uploadResponse = await cloudinary.uploader.upload(base64File, {
       folder: "uploads", // Optional: Organize images into a folder
     });
-    console.log(
-      uploadResponse,
-      "the upload response in the api route handling function "
-    );
 
     return new Response(JSON.stringify({ url: uploadResponse.secure_url }), {
       status: 200,
