@@ -16,7 +16,7 @@ export default function ListTable({ productList }) {
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState("Last 30 days");
+  const [selectedFilter, setSelectedFilter] = useState("L ast 30 days");
   const queryclient = useQueryClient();
 
   const pathName = usePathname();

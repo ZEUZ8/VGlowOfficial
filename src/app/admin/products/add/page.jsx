@@ -71,7 +71,7 @@ const page = () => {
   const formik = useFormik({
     initialValues: {
       productName: "",
-      productDescription: "",
+      description: "",
       mainCategory: "",
       subCategory: "",
       basePricing: '',
@@ -139,15 +139,15 @@ const page = () => {
                   <textarea
                     placeholder="Enter Description"
                     type="text"
-                    name="productDescription"
-                    value={values.productDescription}
+                    name="description"
+                    value={values.description}
                     onBlur={handleBlur}
                     onChange={handleChange}
                     className="rounded-lg bg-gray-200 w-full p-2 px-3 placeholder:text-sm placeholder:text-gray-600 text-sm"
                   />
-                  {errors.productDescription && touched.productDescription && (
+                  {errors.description && touched.description && (
                     <p className="p-1 text-xs font-light text-red-500">
-                      {errors.productDescription}
+                      {errors.description}
                     </p>
                   )}
                 </div>

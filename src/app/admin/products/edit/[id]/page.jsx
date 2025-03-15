@@ -54,7 +54,6 @@ const page = () => {
           toast.error(response?.data?.msg);
         }
       } catch (error) {
-        console.log(error, "consoling err");
         toast.error("something went wrong");
       }
     };
@@ -62,10 +61,6 @@ const page = () => {
     getting();
   }, []);
 
-  useEffect(() => {
-    console.log(values, " conksling the values ");
-  }, [values]);
-  
   // console.log(product,'the data')
   const { mutate } = useMutation({
     mutationFn: async (values) => {
@@ -79,14 +74,9 @@ const page = () => {
 
     onSuccess: (data) => {
       resetForm();
-      console.log(
-        data.msg,
-        data.status,
-        data,
-        " consoling al response in the console"
-      );
-      if (data?.msg === "Product updated successfully") {
-        console.log(data?.msg);
+      if (data?.msg === "Product updated") {
+        console.log(data?.product);
+        setProduct(data?.product);
         toast.success("Product updated");
       } else {
         console.log("chumma", data?.msg);
@@ -106,7 +96,7 @@ const page = () => {
   const formik = useFormik({
     initialValues: {
       productName: "",
-      productDescription: "",
+      description: "",
       mainCategory: "",
       subCategory: "",
       basePricing: "",
@@ -124,7 +114,7 @@ const page = () => {
     if (product) {
       formik.setValues({
         productName: product?.productName ?? "",
-        productDescription: product?.description ?? "",
+        description: product?.description ?? "",
         mainCategory: product?.category ?? "",
         subCategory: product?.subCategory ?? "",
         basePricing: product?.basePricing ?? "",
@@ -204,15 +194,15 @@ const page = () => {
                   <textarea
                     placeholder="Enter Description"
                     type="text"
-                    name="productDescription"
-                    value={values.productDescription}
+                    name="description"
+                    value={values.description}
                     onBlur={handleBlur}
                     onChange={handleChange}
                     className="rounded-lg bg-gray-200 w-full p-2 px-3 placeholder:text-sm placeholder:text-gray-600 text-sm"
                   />
-                  {errors.productDescription && touched.productDescription && (
+                  {errors.description && touched.description && (
                     <p className="p-1 text-xs font-light text-red-500">
-                      {errors.productDescription}
+                      {errors.description}
                     </p>
                   )}
                 </div>
