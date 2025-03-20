@@ -8,6 +8,7 @@ import {
   ChartColumnStacked,
   ChevronDown,
   ChevronUp,
+  Tag,
 } from "lucide-react";
 
 import {
@@ -43,9 +44,19 @@ const items = [
     icon: Home,
   },
   {
+    title: "Orders",
+    // url: "/pro",
+    icon: Inbox,
+    submenu: [
+      { title: "Orders", url: "/admin/products/report" },
+      { title: "Draft", url: "/admin/products" },
+      { title: "Abandoned Checkouts", url: "/admin/products/add" },
+    ],
+  },
+  {
     title: "Products",
     // url: "/pro",
-    icon: ShoppingCart,
+    icon: Tag,
     submenu: [
       { title: "Analytics", url: "/admin/products/report" },
       { title: "Products", url: "/admin/products" },

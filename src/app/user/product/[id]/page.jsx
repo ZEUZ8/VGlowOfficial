@@ -389,7 +389,9 @@ const page = () => {
                   </div>
                 </div>
                 <div className="flex justify-center items-center ">
-                  <p className="text-blue-500 font-semibold text-xs underline underline-offset-2">KNOW MORE</p>
+                  <p className="text-blue-500 font-semibold text-xs underline underline-offset-2">
+                    KNOW MORE
+                  </p>
                 </div>
               </div>
             </div>

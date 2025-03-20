@@ -145,7 +145,7 @@ const ImageUpload = ({ formik, setFieldValue, product }) => {
             {images?.length > 0 &&
               images?.slice(1).map((item, i) => (
                 <div
-                  className="overflow-hidden rounded-lg aspect-w-1 h-[6rem]  hover:bg-white relative cursor-pointer group"
+                  className="overflow-hidden border border-gray-100 rounded-lg aspect-w-1 h-[6rem]  hover:bg-white relative cursor-pointer group"
                   key={i}
                   draggable
                   onDragStart={(e) => handleDragStart(e, item)}
